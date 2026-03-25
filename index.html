@@ -192,12 +192,12 @@ select.inp { appearance:none; }
         </select>
       </div>
       <div class="card" style="text-align:center;padding:22px;margin-bottom:12px">
-        <div style="color:var(--muted);font-size:13px;margin-bottom:14px">Натисни веднъж 🎙️, говори, спира автоматично</div>
+        <div style="color:var(--muted);font-size:13px;margin-bottom:14px">Натисни 🎙️, говори свободно — спира сам след пауза</div>
         <div style="display:flex;justify-content:center;margin-bottom:14px">
           <button class="vbtn vbtn-idle" id="main-vbtn" style="width:72px;height:72px;font-size:32px"
             onclick="toggleVoice('diary')">🎙️</button>
         </div>
-        <div id="vbtn-status" style="color:var(--muted);font-size:12px">Натисни веднъж и говори</div>
+        <div id="vbtn-status" style="color:var(--muted);font-size:12px">Натисни веднъж — спира сам</div>
       </div>
       <div class="card" style="margin-bottom:12px">
         <label class="lbl">Или напиши</label>
@@ -305,8 +305,7 @@ select.inp { appearance:none; }
   <div id="vovl-icon" style="font-size:72px;animation:pulse-r 1s infinite">🎙️</div>
   <div id="vovl-txt" style="color:var(--cream);font-size:18px;text-align:center">Слушам...</div>
   <div id="vovl-trans" style="color:var(--honey);font-size:14px;text-align:center;max-width:300px;line-height:1.6;min-height:44px"></div>
-  <button onclick="stopListening()" style="background:var(--card);border:1px solid var(--border);color:var(--cream);font-size:14px;border-radius:20px;padding:10px 28px;cursor:pointer;margin-top:8px">⏹ Стоп</button>
-  <button onclick="cancelVoice()" style="color:var(--muted);font-size:13px;background:none;border:none;cursor:pointer;padding:8px">✕ Отказ</button>
+  <button onclick="cancelVoice()" style="background:var(--card);border:1px solid var(--border);color:var(--cream);font-size:14px;border-radius:20px;padding:10px 28px;cursor:pointer;margin-top:8px">✕ Отказ</button>
 </div>
 
 <script>
@@ -315,6 +314,7 @@ select.inp { appearance:none; }
 // ═══════════════════════════════════════════════════
 let S = { hives:[], settings:{ name:'Пчелар', apiKey:'', interval:21 } };
 let editingId = null;
+let pendingText = null;
 let voiceMode = 'diary';
 let rec = null;
 let curFilter = 'all';
@@ -544,7 +544,7 @@ function startListening(mode){
   rec.lang='bg-BG';
   rec.interimResults=true;
   rec.maxAlternatives=1;
-  rec.continuous=false; // Спира автоматично след пауза — точно като Gboard
+  rec.continuous=true; // Слуша непрекъснато — спираме сами след 8 сек тишина
 
   const ov=document.getElementById('vovl');
   const icon=document.getElementById('vovl-icon');
@@ -555,38 +555,54 @@ function startListening(mode){
 
   ov.style.display='flex';
   icon.textContent='🎙️';
-  txt.textContent='Слушам... (говори, спирам автоматично)';
+  txt.textContent='Слушам... спирам сам след 8 сек тишина';
   trans.textContent='';
   if(btn) btn.className='vbtn vbtn-listening';
 
-  let finalText='';
+
+
+  let allText='';
+  let silenceTimer=null;
+  const SILENCE_MS=8000; // 8 секунди тишина → спира
+
+  function resetSilenceTimer(){
+    clearTimeout(silenceTimer);
+    silenceTimer=setTimeout(()=>{ if(isListening) stopListening(); }, SILENCE_MS);
+  }
 
   rec.onresult=ev=>{
-    let interim='', final='';
+    let interim='';
+    allText='';
     for(let i=0;i<ev.results.length;i++){
-      if(ev.results[i].isFinal) final+=ev.results[i][0].transcript;
+      if(ev.results[i].isFinal) allText+=ev.results[i][0].transcript+' ';
       else interim+=ev.results[i][0].transcript;
     }
-    if(final) finalText=final;
-    trans.textContent='"'+(finalText||interim)+'"';
+    trans.textContent='"'+(allText+interim).trim()+'"';
+    resetSilenceTimer(); // Нулира таймера при всяка дума
   };
 
+  // Стартирай таймера веднага щом започне слушането
+  resetSilenceTimer();
+
   rec.onend=()=>{
+    clearTimeout(silenceTimer);
+    if(isListening){
+      // Chrome го спря принудително — рестартирай
+      try{ rec.start(); resetSilenceTimer(); return; }catch(e){}
+    }
     isListening=false;
     if(btn) btn.className='vbtn vbtn-processing';
     icon.textContent='⏳'; txt.textContent='Обработвам...';
-    const result=(finalText||trans.textContent.replace(/^"|"$/g,'')).trim();
+    const result=allText.trim()||trans.textContent.replace(/^"|"$/g,'').trim();
     setTimeout(()=>{
       ov.style.display='none';
       if(btn) btn.className='vbtn vbtn-idle';
-      if(!result) return;
+      if(!result){ toast('⚠️ Нищо не чух — опитай пак'); return; }
       if(mode==='ai'){
         document.getElementById('ai-q').value=result; askAI();
       } else {
-        // Провери за гласови команди за кошери
         if(voiceCommandHive(result)) return;
-        const hiveId=document.getElementById('diary-sel')?.value||null;
-        processText(result,hiveId);
+        processText(result, null);
       }
     },300);
   };
@@ -596,7 +612,7 @@ function startListening(mode){
     ov.style.display='none';
     if(btn) btn.className='vbtn vbtn-idle';
     if(e.error==='not-allowed') alert('Разреши достъп до микрофона в настройките на браузъра.');
-    else if(e.error!=='aborted') toast('⚠️ Грешка: '+e.error);
+    else if(e.error!=='aborted' && e.error!=='no-speech') toast('⚠️ Грешка: '+e.error);
   };
 
   rec.start();
@@ -612,6 +628,11 @@ function cancelVoice(){
   if(rec){ try{ rec.abort(); }catch(e){} }
   document.getElementById('vovl').style.display='none';
   ['main-vbtn','ai-vbtn'].forEach(id=>{ const el=document.getElementById(id); if(el) el.className='vbtn vbtn-idle'; });
+}
+
+function stopListening(){
+  isListening=false;
+  if(rec){ try{ rec.stop(); }catch(e){} }
 }
 
 // ═══════════════════════════════════════════════════
@@ -661,31 +682,33 @@ async function processText(text, hiveId){
   }
   toast('🤖 Обработвам...');
   const ctx=S.hives.map(h=>`Кошер ${h.number||h.id}${h.name?' ('+h.name+')':''}: сила ${h.strength||'?'}/10, матка ${h.queenYear||'?'}, посл.преглед ${h.lastInspection||'неизв.'}`).join('\n');
-  const sys=`Ти си AI за пчелар. Анализирай гласовата бележка и върни САМО валиден JSON без текст преди или след него.
+  const sys=`Ти си AI асистент за пчелар. Анализирай гласовата бележка и върни САМО валиден JSON без текст преди или след него.
 
-Кошери:
+Налични кошери в пчелина (номер: описание):
 ${ctx}
 
-JSON формат:
+JSON формат — върни ТОЧНО така:
 {
   "entries": [{
     "hiveNumbers": ["23"],
-    "text": "Описание на действието/наблюдението",
+    "text": "Кратко описание на действието или наблюдението",
     "type": "observation|inspection|feeding|treatment|task|completed",
     "isCompleted": true,
     "flags": {"swarm":false,"noQueen":false,"disease":false,"lowFood":false},
-    "tasks": ["задача"],
-    "updateFields": {"strength":7,"honey":12,"hasSuper":true,"varroaTreatment":"2026-03-24"}
+    "tasks": [],
+    "updateFields": {}
   }],
   "summary": "Резюме"
 }
 
-Правила:
-- hiveNumbers: масив с номерата споменати в текста; ако няма → ["current"]
-- isCompleted: true при "направих","сложих","прегледах","извърших","хранено","готово"
-- isCompleted: false при "трябва","планирам","нужно","ще"
-- Извлечи числа за strength,honey ако са споменати
-- type="inspection" само ако е извършен преглед`;
+ПРАВИЛА — задължителни:
+1. hiveNumbers: извлечи номерата на кошерите споменати в текста (като цифри или думи "двадесет и три" = "23"). Ако не се споменава конкретен номер → ["all"]
+2. Ако hiveNumbers е ["all"] → създай един entry за ВСИЧКИ кошери
+3. isCompleted: true при думи като "направих","сложих","прегледах","извърших","хранено","готово","свърших","поставих"
+4. isCompleted: false при "трябва","планирам","нужно е","ще","искам"
+5. type="inspection" само при реален преглед на кошера
+6. updateFields: попълни само ако са споменати конкретни стойности (сила, мед, магазин)
+7. НИКОГА не връщай празен entries масив — винаги запази текста`;
   try{
     const res=await callAPI(text,sys);
     let parsed; try{ parsed=JSON.parse(res); }catch{ parsed={entries:[]}; }
@@ -693,12 +716,27 @@ JSON формат:
     let saved=0;
     entries.forEach(entry=>{
       let targets=[];
-      if(entry.hiveNumbers&&entry.hiveNumbers.length&&entry.hiveNumbers[0]!=='current'){
-        entry.hiveNumbers.forEach(n=>{ const h=S.hives.find(x=>String(x.number)===String(n)); if(h)targets.push(h); });
+      const nums=entry.hiveNumbers||[];
+      if(nums.includes('all')||nums.includes('ALL')){
+        targets=[...S.hives]; // Всички кошери
+      } else if(nums.length>0 && nums[0]!=='current'){
+        nums.forEach(n=>{
+          // Търси по точен номер
+          let h=S.hives.find(x=>String(x.number)===String(n));
+          // Ако не намери — търси по частично съвпадение
+          if(!h) h=S.hives.find(x=>String(x.number).includes(String(n))||String(n).includes(String(x.number)));
+          if(h&&!targets.includes(h)) targets.push(h);
+        });
       }
+      // Ако не е разпознат кошер — попитай потребителя
       if(!targets.length){
         if(hiveId){ const h=S.hives.find(x=>x.id==hiveId); if(h)targets=[h]; }
-        else targets=[...S.hives];
+        else {
+          // Покажи диалог с избор на кошер
+          pendingText=text;
+          showHivePicker();
+          return;
+        }
       }
       targets.forEach(h=>{
         addNote(h.id,entry.text||text,entry.type||'note');
@@ -713,11 +751,17 @@ JSON формат:
         calcStatus(h); saved++;
       });
     });
-    save(); toast('✅ Записано в '+saved+' кошера');
+    if(saved===0){
+      // AI не разпозна нищо — попитай за кошер
+      pendingText=text;
+      showHivePicker();
+      return;
+    }
+    save(); toast('✅ Записано в '+saved+(saved===1?' кошер':' кошера'));
     if(document.getElementById('view-diary').style.display!=='none') renderDiaryEntries();
     if(document.getElementById('view-dashboard').style.display!=='none') renderDash();
     renderBadge();
-  }catch(err){ toast('⚠️ Грешка — записвам без AI'); const tid=hiveId||(S.hives.length?S.hives[0].id:null); if(tid){addNote(tid,text,'note');save();renderDiaryEntries();} }
+  }catch(err){ toast('⚠️ Грешка — записвам без AI'); const tid=hiveId||(S.hives.length?S.hives[0].id:null); if(tid){addNote(tid,text,'note');save();renderDiaryEntries();renderBadge();} }
 }
 
 // ═══════════════════════════════════════════════════
@@ -888,6 +932,41 @@ function toast(msg){
   clearTimeout(t._t); t._t=setTimeout(()=>t.style.opacity='0',3000);
 }
 
+
+// ═══════════════════════════════════════════════════
+// HIVE PICKER — когато AI не разпознае кошера
+// ═══════════════════════════════════════════════════
+function showHivePicker(){
+  const el=document.getElementById('hive-picker');
+  const list=document.getElementById('hive-picker-list');
+  const preview=document.getElementById('hive-picker-preview');
+  if(preview) preview.textContent='"'+pendingText+'"';
+  list.innerHTML=S.hives.map(h=>`
+    <button onclick="pickHive(${h.id})" style="
+      width:100%;background:var(--card);border:1px solid var(--border);
+      border-radius:11px;padding:13px 15px;color:var(--cream);
+      font-family:var(--font-body);font-size:15px;font-weight:600;
+      cursor:pointer;text-align:left;margin-bottom:7px;
+      display:flex;align-items:center;gap:10px;
+    ">
+      <span style="color:var(--honey);font-size:20px;min-width:36px;text-align:center">${h.number||h.id}</span>
+      <span>${h.name||('Кошер '+h.number)}<br><span style="color:var(--muted);font-size:12px;font-weight:400">${h.location||''}</span></span>
+    </button>
+  `).join('');
+  el.style.display='flex';
+}
+
+function pickHive(hiveId){
+  document.getElementById('hive-picker').style.display='none';
+  if(!pendingText) return;
+  const h=S.hives.find(x=>x.id===hiveId); if(!h) return;
+  addNote(h.id, pendingText, 'note');
+  calcStatus(h); save();
+  renderDiaryEntries(); renderDash(); renderBadge();
+  toast('✅ Записано в Кошер '+(h.number||h.id));
+  pendingText=null;
+}
+
 // ═══════════════════════════════════════════════════
 // INIT
 // ═══════════════════════════════════════════════════
@@ -895,5 +974,29 @@ load(); refreshAll(); renderDash(); renderBadge();
 document.getElementById('hdr-sub').textContent=(S.settings.name||'Пчелар')+' · AI Дневник';
 if(!S.settings.apiKey) setTimeout(()=>toast('👋 Добре дошъл! Въведи API ключ в ⚙️ Настройки'),1200);
 </script>
+
+<!-- HIVE PICKER MODAL -->
+<div class="movl" id="hive-picker" style="display:none" onclick="if(event.target===this)this.style.display='none'">
+  <div class="modal">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+      <span style="font-size:28px">🤔</span>
+      <div>
+        <div class="modal-title" style="margin:0">За кой кошер?</div>
+        <div style="color:var(--muted);font-size:12px">AI не разпозна номера</div>
+      </div>
+    </div>
+    <div style="background:var(--panel);border-radius:10px;padding:10px 13px;margin-bottom:14px;border-left:3px solid var(--amber)">
+      <div style="color:var(--muted);font-size:11px;margin-bottom:3px">Записан текст:</div>
+      <div id="hive-picker-preview" style="color:var(--cream);font-size:13px;line-height:1.5"></div>
+    </div>
+    <div style="color:var(--muted);font-size:12px;margin-bottom:10px">Избери кошера:</div>
+    <div id="hive-picker-list" style="max-height:50vh;overflow-y:auto"></div>
+    <button onclick="document.getElementById('hive-picker').style.display='none';pendingText=null;" 
+      style="width:100%;background:none;border:1px solid var(--border);border-radius:10px;
+      padding:11px;color:var(--muted);font-family:var(--font-body);font-size:14px;cursor:pointer;margin-top:5px">
+      Откажи
+    </button>
+  </div>
+</div>
 </body>
 </html>
