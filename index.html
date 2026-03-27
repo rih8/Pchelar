@@ -9,170 +9,165 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#f7f2e9;
-  --surface:#ffffff;
-  --card:#fffdf8;
-  --border:#e5d9be;
-  --border2:#c8b88a;
-  --amber:#d97706;
-  --amber-l:#fef9ee;
-  --honey:#92400e;
-  --text:#1a1200;
-  --text2:#5c4010;
-  --muted:#9a7535;
-  --green:#166534;
-  --green-bg:#f0fdf4;
-  --green-b:#bbf7d0;
-  --red:#991b1b;
-  --red-bg:#fef2f2;
-  --red-b:#fecaca;
-  --orange:#9a3412;
-  --orange-bg:#fff7ed;
-  --orange-b:#fed7aa;
-  --purple:#5b21b6;
-  --purple-bg:#f5f3ff;
-  --sh:0 2px 14px #c8a04022;
+  --bg:#f7f2e9;--surface:#fff;--card:#fffdf8;--border:#e5d9be;--border2:#c8b88a;
+  --amber:#d97706;--amber-l:#fef9ee;--honey:#92400e;--text:#1a1200;--text2:#5c4010;
+  --muted:#9a7535;--green:#166534;--green-bg:#f0fdf4;--green-b:#bbf7d0;
+  --red:#991b1b;--red-bg:#fef2f2;--red-b:#fecaca;
+  --orange:#9a3412;--orange-bg:#fff7ed;--orange-b:#fed7aa;
+  --purple:#5b21b6;--purple-bg:#f5f3ff;
+  --gray:#6b7280;--gray-bg:#f9fafb;--gray-b:#e5e7eb;
+  --sh:0 2px 14px #c8a04018;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;overflow:hidden;font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--text)}
 #app{display:flex;flex-direction:column;height:100vh;max-width:480px;margin:0 auto;box-shadow:0 0 60px #00000018}
 
-/* HEADER */
-.hdr{background:linear-gradient(135deg,#7c2d12 0%,#b45309 60%,#d97706 100%);padding:13px 15px 11px;flex-shrink:0;box-shadow:0 3px 12px #7c2d1240}
-.logo{font-family:'Playfair Display',serif;font-size:23px;color:#fff;letter-spacing:-.3px}
+.hdr{background:linear-gradient(135deg,#7c2d12,#b45309,#d97706);padding:13px 15px 11px;flex-shrink:0;box-shadow:0 3px 12px #7c2d1240}
+.logo{font-family:'Playfair Display',serif;font-size:23px;color:#fff}
 .hdr-sub{color:#fde68a;font-size:11px;margin-top:2px}
 .hdr-row{display:flex;justify-content:space-between;align-items:center}
 .urgchip{background:#ef444430;border:1px solid #ef444460;color:#fca5a5;border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700;display:inline-flex;align-items:center;gap:3px}
+.warnchip{background:#f9731620;border:1px solid #f9731650;color:#fed7aa;border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700;display:inline-flex;align-items:center;gap:3px}
 
-/* INPUT BAR */
 .ibar{background:var(--surface);border-bottom:2px solid var(--border);padding:9px 12px;flex-shrink:0;box-shadow:0 1px 6px #00000008}
 .ibar-hint{color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px}
 .ibar-row{display:flex;gap:8px;align-items:flex-end}
 .mi{flex:1;background:var(--bg);border:1.5px solid var(--border2);border-radius:12px;padding:11px 13px;color:var(--text);font-family:'Source Sans 3',sans-serif;font-size:16px;resize:none;min-height:46px;max-height:110px;line-height:1.4;transition:border-color .2s,box-shadow .2s}
 .mi:focus{outline:none;border-color:var(--amber);box-shadow:0 0 0 3px #d9770618}
 .mi::placeholder{color:var(--muted)}
-.sbtn{background:linear-gradient(135deg,#d97706,#92400e);border:none;border-radius:12px;width:46px;height:46px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0;box-shadow:0 2px 8px #d9770650;transition:transform .15s}
+.sbtn{background:linear-gradient(135deg,#d97706,#92400e);border:none;border-radius:12px;width:46px;height:46px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0;box-shadow:0 2px 8px #d9770650;transition:transform .15s;color:#fff}
 .sbtn:active{transform:scale(.91)}
 
-/* NAV */
 .nav{display:flex;background:var(--surface);border-bottom:2px solid var(--border);flex-shrink:0}
 .nb{flex:1;background:none;border:none;cursor:pointer;padding:9px 4px 8px;color:var(--muted);font-size:10px;font-family:'Source Sans 3',sans-serif;font-weight:700;border-bottom:2.5px solid transparent;transition:all .18s;display:flex;flex-direction:column;align-items:center;gap:2px;text-transform:uppercase;letter-spacing:.3px;position:relative}
 .nb .ni{font-size:18px}
 .nb.on{color:var(--amber);border-bottom-color:var(--amber)}
 .nbadge{position:absolute;top:5px;right:calc(50% - 18px);background:var(--red);color:#fff;border-radius:50%;width:16px;height:16px;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center}
 
-/* CONTENT */
 .content{flex:1;overflow:hidden;position:relative}
-.view{position:absolute;inset:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:13px 13px 72px}
+.view{position:absolute;inset:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:12px 12px 72px}
 .view::-webkit-scrollbar{width:3px}
 .view::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
 
-/* CARDS */
+/* STAT FILTER BUTTONS */
+.sfrow{display:flex;gap:8px;margin-bottom:13px}
+.sfbtn{flex:1;background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:9px 5px;text-align:center;cursor:pointer;transition:all .18s;box-shadow:var(--sh)}
+.sfbtn.on{border-color:var(--amber);background:var(--amber-l)}
+.sfbtn .sfi{font-size:17px}
+.sfbtn .sfv{color:var(--honey);font-weight:700;font-size:16px;margin-top:2px}
+.sfbtn .sfl{color:var(--muted);font-size:10px;margin-top:1px}
+.sfbtn.on .sfv{color:var(--amber)}
+
 .card{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:var(--sh)}
 .cp{padding:13px 15px}
 
 /* HIVE ROW */
-.hrow{display:flex;gap:11px;align-items:center;padding:13px 15px;cursor:pointer;border-bottom:1px solid var(--border);transition:background .15s;background:var(--card)}
+.hrow{display:flex;gap:11px;align-items:center;padding:13px 15px;cursor:pointer;border-bottom:1px solid var(--border);background:var(--card);transition:background .15s}
 .hrow:last-child{border-bottom:none}
 .hrow:active{background:#fef3c7}
 .hnum{font-family:'Playfair Display',serif;font-size:24px;color:var(--honey);min-width:46px;text-align:center;font-weight:900}
 .hinfo{flex:1;min-width:0}
 .hname{font-size:14px;font-weight:700;color:var(--text)}
 .hmeta{font-size:11px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.sbar{display:flex;gap:2px;margin-top:7px}
-.sb{height:12px;border-radius:2px;flex:1;max-width:12px}
 
-/* STATUS BADGES */
+/* STRENGTH 3-LEVEL */
+.str-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;margin-top:5px}
+.str-weak{background:#fef2f2;border:1px solid #fecaca;color:#991b1b}
+.str-mid{background:#fff7ed;border:1px solid #fed7aa;color:#9a3412}
+.str-strong{background:#f0fdf4;border:1px solid #bbf7d0;color:#166534}
+
+/* STATUS DOT */
+.sdot{width:22px;height:22px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px}
+.sd-ok{background:#dcfce7;border:2px solid #86efac}
+.sd-warn{background:#fff7ed;border:2px solid #fed7aa}
+.sd-urgent{background:#fef2f2;border:2px solid #fca5a5}
+.sd-gray{background:#f3f4f6;border:2px solid #d1d5db}
+.sd-days{font-size:11px;font-weight:700;margin-top:2px;text-align:center}
+
 .badge{display:inline-flex;align-items:center;gap:3px;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:700}
 .b-ok{background:var(--green-bg);border:1px solid var(--green-b);color:var(--green)}
 .b-warn{background:var(--orange-bg);border:1px solid var(--orange-b);color:var(--orange)}
 .b-urgent{background:var(--red-bg);border:1px solid var(--red-b);color:var(--red)}
+.b-gray{background:var(--gray-bg);border:1px solid var(--gray-b);color:var(--gray)}
 
-/* STATS */
-.statrow{display:flex;gap:8px;margin-bottom:13px}
-.stat{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:10px 6px;text-align:center;box-shadow:var(--sh)}
-.stat-i{font-size:18px}
-.stat-v{color:var(--honey);font-weight:700;font-size:17px;margin-top:2px}
-.stat-l{color:var(--muted);font-size:10px;margin-top:1px}
-
-/* MODAL */
 .overlay{position:fixed;inset:0;background:#00000060;z-index:100;display:flex;align-items:flex-end;justify-content:center;animation:fo .2s}
 .modal{background:var(--surface);border:1px solid var(--border);border-radius:20px 20px 0 0;padding:20px 16px 30px;width:100%;max-width:480px;max-height:93vh;overflow-y:auto;animation:su .25s ease;box-shadow:0 -4px 30px #00000020}
 .mtitle{font-family:'Playfair Display',serif;font-size:20px;color:var(--honey);margin-bottom:14px}
 @keyframes fo{from{opacity:0}to{opacity:1}}
 @keyframes su{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
 
-/* FORMS */
 .lbl{display:block;color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
 .inp{width:100%;background:var(--bg);border:1.5px solid var(--border2);border-radius:10px;padding:10px 12px;color:var(--text);font-family:'Source Sans 3',sans-serif;font-size:15px;transition:border-color .2s}
 .inp:focus{outline:none;border-color:var(--amber)}
 select.inp{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239a7535' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
 
-/* BUTTONS */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:none;border-radius:11px;padding:11px 15px;font-family:'Source Sans 3',sans-serif;font-size:14px;font-weight:700;cursor:pointer;min-height:44px;transition:opacity .15s,transform .12s}
 .btn:active{opacity:.8;transform:scale(.96)}
 .btn-amber{background:linear-gradient(135deg,#d97706,#92400e);color:#fff;box-shadow:0 2px 8px #d9770640}
 .btn-green{background:linear-gradient(135deg,#166534,#14532d);color:#fff}
 .btn-red{background:linear-gradient(135deg,#991b1b,#7f1d1d);color:#fff}
+.btn-orange{background:linear-gradient(135deg,#c2410c,#9a3412);color:#fff}
 .btn-ghost{background:var(--bg);border:1.5px solid var(--border2);color:var(--text2)}
 .btn-purple{background:linear-gradient(135deg,#5b21b6,#4c1d95);color:#fff}
 .btn-full{width:100%}
 
-/* DIARY */
-.dentry{background:var(--surface);border-radius:11px;border-left:3px solid var(--amber);padding:11px 13px;margin-bottom:8px;box-shadow:var(--sh);animation:su .3s}
-.dentry-hive{color:var(--amber);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px}
-.dentry-txt{font-size:13px;line-height:1.6;color:var(--text)}
-.dentry-date{color:var(--muted);font-size:11px;margin-top:5px}
+/* HIVE FIELDS GRID */
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.fbox{background:var(--bg);border-radius:11px;padding:10px 12px;border:1px solid var(--border)}
+.fbox-full{grid-column:1/-1}
+.fbox-lbl{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.3px;margin-bottom:4px;font-weight:700}
+.fbox-val{color:var(--text);font-weight:700;font-size:13px;line-height:1.4}
+.fbox-sub{color:var(--muted);font-size:11px;margin-top:2px}
+.piti-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;text-align:center}
+.piti-num{font-family:'Playfair Display',serif;font-size:28px;color:var(--honey);font-weight:900}
+.piti-lbl{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.3px;margin-top:1px}
+.piti-div{width:1px;background:var(--border);margin:4px 0}
 
-/* AI BOX */
+/* DIARY IN HIVE */
+.dentry{background:var(--surface);border-radius:10px;border-left:3px solid var(--amber);padding:10px 12px;margin-bottom:7px;animation:su .3s;box-shadow:var(--sh)}
+.dentry-date{color:var(--amber);font-size:11px;font-weight:700;margin-bottom:3px}
+.dentry-txt{font-size:13px;line-height:1.55;color:var(--text)}
+.dentry-reset{border-left-color:var(--red)!important}
+.dentry-reset .dentry-txt{color:var(--red);font-weight:700}
+.dentry-actions{display:flex;gap:6px;margin-top:7px}
+.dact{background:none;border:1px solid var(--border);border-radius:7px;padding:4px 10px;font-size:11px;cursor:pointer;font-family:'Source Sans 3',sans-serif;color:var(--text2);transition:background .15s}
+.dact:active{background:var(--bg)}
+.dact-del{border-color:var(--red-b);color:var(--red)}
+
 .aibox{background:var(--purple-bg);border:1px solid #ddd6fe;border-radius:13px;padding:14px;margin-top:11px;animation:su .3s}
 .aibox-hd{color:var(--purple);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
 .aibox-txt{color:var(--text);font-size:13px;line-height:1.75;white-space:pre-wrap}
 
-/* NOTIF */
 .nitem{padding:12px 13px;border-radius:12px;margin-bottom:8px;cursor:pointer;display:flex;gap:10px;align-items:flex-start;box-shadow:var(--sh)}
 .n-u{background:var(--red-bg);border:1px solid var(--red-b)}
 .n-w{background:var(--orange-bg);border:1px solid var(--orange-b)}
 .n-t{background:var(--amber-l);border:1px solid #fcd34d}
 
-/* HIVE PICKER */
 .hpick{width:100%;background:var(--bg);border:1.5px solid var(--border2);border-radius:12px;padding:13px 14px;color:var(--text);font-family:'Source Sans 3',sans-serif;font-size:15px;font-weight:600;cursor:pointer;text-align:left;margin-bottom:7px;display:flex;align-items:center;gap:11px;transition:background .15s}
 .hpick:active{background:#fef3c7}
 .hpick-num{font-family:'Playfair Display',serif;font-size:22px;color:var(--honey);font-weight:900;min-width:38px;text-align:center}
 
-/* PROCESSING */
 .proc-ovl{position:fixed;inset:0;background:#ffffffcc;z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;animation:fo .2s;backdrop-filter:blur(4px)}
 .proc-spin{font-size:52px;animation:sp 1.4s linear infinite}
 @keyframes sp{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 
-/* EMPTY */
 .empty{text-align:center;padding:44px 18px;color:var(--muted)}
 .empty-i{font-size:50px;margin-bottom:11px}
-
-/* INFO GRID */
-.igrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
-.ibox{background:var(--bg);border-radius:10px;padding:9px 11px;border:1px solid var(--border)}
-.ibox-l{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.3px;margin-bottom:3px}
-.ibox-v{color:var(--text);font-weight:700;font-size:13px}
-
-/* MISC */
 .stitle{color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:9px}
 hr.dv{border:none;border-top:1px solid var(--border);margin:12px 0}
 .g8{display:flex;gap:8px}
-.g10{display:flex;gap:10px}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
 .mt8{margin-top:8px}
 .mt12{margin-top:12px}
 .toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:var(--honey);color:#fff;padding:9px 20px;border-radius:22px;font-size:13px;font-weight:600;z-index:300;pointer-events:none;transition:opacity .3s;white-space:nowrap;max-width:90vw;text-align:center;box-shadow:0 4px 16px #92400e40}
 
-/* FILTER CHIPS */
-.fchip{background:var(--surface);border:1.5px solid var(--border);border-radius:20px;padding:5px 13px;font-size:12px;color:var(--text2);cursor:pointer;white-space:nowrap;font-family:'Source Sans 3',sans-serif;font-weight:600;transition:all .15s}
-.fchip.on{border-color:var(--amber);color:var(--amber);background:var(--amber-l)}
+/* EDIT NOTE MODAL */
+.edit-ta{width:100%;background:var(--bg);border:1.5px solid var(--border2);border-radius:10px;padding:10px 12px;color:var(--text);font-family:'Source Sans 3',sans-serif;font-size:15px;resize:none;min-height:80px;line-height:1.4}
+.edit-ta:focus{outline:none;border-color:var(--amber)}
 </style>
 </head>
 <body>
 <div id="app">
-
   <!-- HEADER -->
   <div class="hdr">
     <div class="hdr-row">
@@ -190,7 +185,7 @@ hr.dv{border:none;border-top:1px solid var(--border);margin:12px 0}
     <div class="ibar-hint">✍️ Въведи информация с Gboard</div>
     <div class="ibar-row">
       <textarea class="mi" id="main-inp" rows="1"
-        placeholder="напр: Кошер 5 — прегледан, майката добра, сила 7..."
+        placeholder="напр: Кошер 5 — 8 пити, 2 зад дъска, 3 пило, много мед"
         oninput="autoResize(this)"
         onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendInput()}"></textarea>
       <button class="sbtn" onclick="sendInput()">➤</button>
@@ -200,7 +195,6 @@ hr.dv{border:none;border-top:1px solid var(--border);margin:12px 0}
   <!-- NAV -->
   <div class="nav">
     <button class="nb on" id="nb-dash" onclick="show('dash')"><span class="ni">🏠</span>Кошери</button>
-    <button class="nb" id="nb-diary" onclick="show('diary')"><span class="ni">📖</span>Дневник</button>
     <button class="nb" id="nb-notif" onclick="show('notif')" style="position:relative">
       <span class="ni">🔔</span>Сигнали
       <span class="nbadge" id="nbadge" style="display:none">0</span>
@@ -213,29 +207,10 @@ hr.dv{border:none;border-top:1px solid var(--border);margin:12px 0}
 
     <!-- DASHBOARD -->
     <div class="view" id="v-dash">
-      <div id="stats-row" class="statrow"></div>
-      <div class="g8" style="margin-bottom:10px;align-items:center">
-        <div class="stitle" style="margin:0;flex:1">Всички кошери</div>
-        <button class="btn btn-amber" style="padding:6px 13px;min-height:36px;font-size:13px" onclick="openAddHive()">+ Нов кошер</button>
-      </div>
-      <div style="display:flex;gap:6px;margin-bottom:11px;overflow-x:auto;padding-bottom:3px">
-        <button class="fchip on" id="f-all" onclick="setF('all')">Всички</button>
-        <button class="fchip" id="f-urgent" onclick="setF('urgent')">🔴 Спешни</button>
-        <button class="fchip" id="f-warn" onclick="setF('warn')">🟡 Внимание</button>
-        <button class="fchip" id="f-ok" onclick="setF('ok')">🟢 Добри</button>
-      </div>
+      <!-- STAT FILTER BUTTONS -->
+      <div class="sfrow" id="sfrow"></div>
+      <!-- HIVE LIST -->
       <div class="card" id="hive-list"></div>
-    </div>
-
-    <!-- DIARY -->
-    <div class="view" id="v-diary" style="display:none">
-      <div class="g8" style="margin-bottom:11px;align-items:center">
-        <div class="stitle" style="margin:0;flex:1">Записи</div>
-        <select class="inp" id="diary-filter" onchange="renderDiary()" style="max-width:170px;padding:6px 28px 6px 10px;font-size:13px">
-          <option value="">Всички кошери</option>
-        </select>
-      </div>
-      <div id="diary-list"></div>
     </div>
 
     <!-- NOTIFICATIONS -->
@@ -256,8 +231,8 @@ hr.dv{border:none;border-top:1px solid var(--border);margin:12px 0}
       </div>
       <div id="ai-result"></div>
       <div class="card cp" style="margin-top:12px">
-        <label class="lbl">Задай въпрос към AI</label>
-        <div style="color:var(--muted);font-size:12px;margin-bottom:9px">Пиши с Gboard или използвай горния ред</div>
+        <label class="lbl">Задай въпрос</label>
+        <div style="color:var(--muted);font-size:12px;margin-bottom:9px">Пиши с Gboard</div>
         <div class="g8">
           <input type="text" class="inp" id="ai-q" placeholder="Въпрос..." style="flex:1" onkeydown="if(event.key==='Enter')askQ()">
           <button class="btn btn-amber" style="min-height:44px;padding:0 14px" onclick="askQ()">→</button>
@@ -265,7 +240,6 @@ hr.dv{border:none;border-top:1px solid var(--border);margin:12px 0}
       </div>
       <div id="ai-q-res"></div>
     </div>
-
   </div>
 </div>
 
@@ -274,7 +248,7 @@ hr.dv{border:none;border-top:1px solid var(--border);margin:12px 0}
   <div class="modal" id="ov-hive-body"></div>
 </div>
 
-<!-- ADD/EDIT HIVE MODAL -->
+<!-- ADD/EDIT HIVE -->
 <div class="overlay" id="ov-add" style="display:none" onclick="if(event.target===this)closeAdd()">
   <div class="modal">
     <div class="mtitle" id="add-title">🐝 Нов кошер</div>
@@ -283,16 +257,12 @@ hr.dv{border:none;border-top:1px solid var(--border);margin:12px 0}
       <div><label class="lbl">Наименование</label><input type="text" class="inp" id="nh-name" placeholder="напр. Майка, Рой 1..."></div>
       <div><label class="lbl">Местоположение</label><input type="text" class="inp" id="nh-loc" placeholder="напр. Горна градина"></div>
       <div class="g2">
-        <div><label class="lbl">Год. матка</label><input type="number" class="inp" id="nh-queen" min="2010" max="2035" placeholder="2024"></div>
+        <div><label class="lbl">Год. на майката</label><input type="number" class="inp" id="nh-queen" min="2010" max="2035" placeholder="2024"></div>
         <div><label class="lbl">Тип кошер</label>
           <select class="inp" id="nh-type">
             <option>Дадан-Блат</option><option>Многокорпусен</option><option>Лежак</option><option>Варе</option><option>Друг</option>
           </select>
         </div>
-      </div>
-      <div class="g2">
-        <div><label class="lbl">Сила (1-10)</label><input type="number" class="inp" id="nh-str" min="1" max="10" placeholder="5"></div>
-        <div><label class="lbl">Мед (кг)</label><input type="number" class="inp" id="nh-honey" min="0" step="0.5" placeholder="0"></div>
       </div>
       <div class="g8 mt8">
         <button class="btn btn-ghost btn-full" onclick="closeAdd()">Отказ</button>
@@ -302,23 +272,39 @@ hr.dv{border:none;border-top:1px solid var(--border);margin:12px 0}
   </div>
 </div>
 
-<!-- HIVE PICKER — когато AI не разпознае кошера -->
+<!-- HIVE PICKER -->
 <div class="overlay" id="ov-pick" style="display:none" onclick="if(event.target===this){this.style.display='none';pendingEntry=null}">
   <div class="modal">
     <div style="display:flex;gap:10px;align-items:flex-start;margin-bottom:12px">
       <span style="font-size:30px">🤔</span>
       <div>
         <div class="mtitle" style="margin-bottom:3px">За кой кошер?</div>
-        <div style="color:var(--muted);font-size:12px">AI не разпозна номера — избери с писалката</div>
+        <div style="color:var(--muted);font-size:12px">Не разпознах номер — избери с писалката</div>
       </div>
     </div>
-    <div style="background:var(--amber-l);border:1px solid #fcd34d;border-radius:10px;padding:10px 13px;margin-bottom:14px;border-left:3px solid var(--amber)">
-      <div style="color:var(--muted);font-size:11px;margin-bottom:3px;font-weight:700;text-transform:uppercase">Записан текст:</div>
+    <div style="background:var(--amber-l);border:1px solid #fcd34d;border-left:3px solid var(--amber);border-radius:10px;padding:10px 13px;margin-bottom:14px">
+      <div style="color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase;margin-bottom:3px">Записан текст:</div>
       <div id="pick-preview" style="color:var(--text);font-size:13px;line-height:1.5"></div>
     </div>
-    <div style="color:var(--muted);font-size:12px;font-weight:700;margin-bottom:10px;text-transform:uppercase;letter-spacing:.4px">Избери кошер:</div>
     <div id="pick-list" style="max-height:45vh;overflow-y:auto"></div>
     <button onclick="document.getElementById('ov-pick').style.display='none';pendingEntry=null" class="btn btn-ghost btn-full mt8">Откажи</button>
+  </div>
+</div>
+
+<!-- EDIT NOTE MODAL -->
+<div class="overlay" id="ov-edit-note" style="display:none" onclick="if(event.target===this)this.style.display='none'">
+  <div class="modal">
+    <div class="mtitle">✏️ Редактирай запис</div>
+    <input type="hidden" id="en-hive-id">
+    <input type="hidden" id="en-note-id">
+    <div style="margin-bottom:11px">
+      <label class="lbl">Текст</label>
+      <textarea class="edit-ta" id="en-text" rows="4"></textarea>
+    </div>
+    <div class="g8">
+      <button class="btn btn-ghost btn-full" onclick="document.getElementById('ov-edit-note').style.display='none'">Отказ</button>
+      <button class="btn btn-amber btn-full" onclick="saveEditNote()">Запази</button>
+    </div>
   </div>
 </div>
 
@@ -343,96 +329,121 @@ hr.dv{border:none;border-top:1px solid var(--border);margin:12px 0}
       <button class="btn btn-ghost btn-full" onclick="document.getElementById('imp').click()">📥 Възстанови от backup</button>
       <input type="file" id="imp" accept=".json" style="display:none" onchange="importData(event)">
       <hr class="dv">
-      <button class="btn btn-red btn-full" onclick="if(confirm('Изтрий ВСИЧКИ данни? Не може да се върне!')) {localStorage.clear();location.reload()}">🗑️ Изтрий всичко</button>
+      <button class="btn btn-red btn-full" onclick="if(confirm('Изтрий ВСИЧКИ данни?')){localStorage.clear();location.reload()}">🗑️ Изтрий всичко</button>
     </div>
   </div>
 </div>
 
-<!-- PROCESSING OVERLAY -->
+<!-- PROCESSING -->
 <div class="proc-ovl" id="proc" style="display:none">
   <div class="proc-spin">🐝</div>
   <div style="color:var(--honey);font-size:17px;font-weight:700" id="proc-txt">Обработвам...</div>
-  <div style="color:var(--muted);font-size:13px;text-align:center;max-width:260px" id="proc-sub">AI анализира информацията</div>
+  <div style="color:var(--muted);font-size:13px;text-align:center;max-width:260px" id="proc-sub"></div>
 </div>
 
 <script>
-// ════════════════════════════════════════
-// STATE & PERSISTENCE
-// ════════════════════════════════════════
+// ══════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════
 let S = { hives:[], settings:{ name:'Пчелар', apiKey:'', interval:21 } };
 let editId = null;
 let pendingEntry = null;
 let curFilter = 'all';
 
-function save(){ try{ localStorage.setItem('ppro4', JSON.stringify(S)); }catch(e){} }
+function save(){ try{ localStorage.setItem('ppro5', JSON.stringify(S)); }catch(e){} }
 function load(){
-  try{
-    const d=localStorage.getItem('ppro4');
-    if(d){ S=JSON.parse(d); }
-  }catch(e){}
+  try{ const d=localStorage.getItem('ppro5'); if(d) S=JSON.parse(d); }catch(e){}
   if(!S.hives) S.hives=[];
   if(!S.settings) S.settings={name:'Пчелар',apiKey:'',interval:21};
 }
 
-// ════════════════════════════════════════
-// STATUS CALCULATION
-// ════════════════════════════════════════
+// ══════════════════════════════════════════════
+// QUEEN COLOR (international standard)
+// ══════════════════════════════════════════════
+function queenColor(year){
+  const colors={1:'#fff',2:'#ffd700',3:'#ef4444',4:'#22c55e',5:'#3b82f6',6:'#fff',7:'#ffd700',8:'#ef4444',9:'#22c55e',0:'#3b82f6'};
+  const names={1:'Бяло',2:'Жълто',3:'Червено',4:'Зелено',5:'Синьо',6:'Бяло',7:'Жълто',8:'Червено',9:'Зелено',0:'Синьо'};
+  const d=parseInt(String(year||0).slice(-1));
+  return {hex:colors[d]||'#fff',name:names[d]||'Бяло'};
+}
+
+// ══════════════════════════════════════════════
+// STATUS
+// ══════════════════════════════════════════════
 function calcStatus(h){
+  if(h.reset){ h.status='reset'; h.alerts=[]; h.daysAgo=null; return; }
   const iv=S.settings.interval||21;
-  const days=h.lastInspection ? Math.floor((new Date()-new Date(h.lastInspection))/86400000) : 999;
+  const days=h.lastInspection?Math.floor((new Date()-new Date(h.lastInspection))/86400000):999;
   h.daysAgo=days;
   let st='ok', al=[];
-  if(days>=iv){ st='urgent'; al.push('🚨 '+days+' дни без преглед — необходим е спешен преглед!'); }
+  if(days>=iv){ st='urgent'; al.push('🚨 '+days+' дни без преглед — необходим спешен преглед!'); }
   else if(days>=Math.floor(iv*0.75)){ st='warn'; al.push('⏰ Предстои преглед след '+(iv-days)+' дни'); }
   const qAge=new Date().getFullYear()-(parseInt(h.queenYear)||new Date().getFullYear());
-  if(qAge>=3){ if(st==='ok') st='warn'; al.push('👑 Матката е на '+qAge+' год. — обмисли подмяна'); }
+  if(qAge>=3){ if(st==='ok') st='warn'; al.push('👑 Майката е на '+qAge+' год. — обмисли подмяна'); }
   if(h.flags){
     if(h.flags.swarm){ st='urgent'; al.push('🐝 Роилни маточници — провери незабавно!'); }
     if(h.flags.noQueen){ st='urgent'; al.push('❌ Майката не е открита!'); }
-    if(h.flags.disease){ st='urgent'; al.push('🦠 Болест / вредители — предприеми мерки!'); }
-    if(h.flags.lowFood && st==='ok'){ st='warn'; al.push('🍯 Ниски хранителни запаси'); }
+    if(h.flags.disease){ st='urgent'; al.push('🦠 Болест/вредители — действай!'); }
+    if(h.flags.lowFood&&st==='ok'){ st='warn'; al.push('🍯 Малко мед — обмисли подхранване'); }
   }
   h.status=st; h.alerts=al;
 }
 function refreshAll(){ S.hives.forEach(calcStatus); }
 
-// ════════════════════════════════════════
-// AUTO RESIZE TEXTAREA
-// ════════════════════════════════════════
-function autoResize(el){ el.style.height='auto'; el.style.height=Math.min(el.scrollHeight,110)+'px'; }
-
-// ════════════════════════════════════════
-// TOAST
-// ════════════════════════════════════════
-function toast(msg, dur=3200){
-  let t=document.getElementById('_toast');
-  if(!t){ t=document.createElement('div'); t.id='_toast'; t.className='toast'; document.body.appendChild(t); }
-  t.textContent=msg; t.style.opacity='1';
-  clearTimeout(t._t); t._t=setTimeout(()=>t.style.opacity='0', dur);
+// ══════════════════════════════════════════════
+// STRENGTH HELPER
+// ══════════════════════════════════════════════
+function strLabel(v){
+  if(!v||v==='weak') return {cls:'str-weak',txt:'🔴 Слабо'};
+  if(v==='mid') return {cls:'str-mid',txt:'🟡 Средна сила'};
+  if(v==='strong') return {cls:'str-strong',txt:'🟢 Силно'};
+  // legacy numeric
+  if(parseInt(v)<=3) return {cls:'str-weak',txt:'🔴 Слабо'};
+  if(parseInt(v)<=6) return {cls:'str-mid',txt:'🟡 Средна сила'};
+  return {cls:'str-strong',txt:'🟢 Силно'};
 }
 
-// ════════════════════════════════════════
+function honeyLabel(v){
+  if(v==='малко'||v==='little') return '🟡 Малко';
+  if(v==='много'||v==='много'||v==='much') return '🟢 Много';
+  if(v==='има'||v==='has') return '🟢 Има';
+  return v||'—';
+}
+
+// ══════════════════════════════════════════════
+// HELPERS
+// ══════════════════════════════════════════════
+function autoResize(el){ el.style.height='auto'; el.style.height=Math.min(el.scrollHeight,110)+'px'; }
+function toast(msg,dur=3200){
+  let t=document.getElementById('_toast');
+  if(!t){t=document.createElement('div');t.id='_toast';t.className='toast';document.body.appendChild(t);}
+  t.textContent=msg;t.style.opacity='1';
+  clearTimeout(t._t);t._t=setTimeout(()=>t.style.opacity='0',dur);
+}
+function showProc(txt,sub){ document.getElementById('proc-txt').textContent=txt||'Обработвам...'; document.getElementById('proc-sub').textContent=sub||''; document.getElementById('proc').style.display='flex'; }
+function hideProc(){ document.getElementById('proc').style.display='none'; }
+function getSeason(){ const m=new Date().getMonth()+1; if(m>=3&&m<=5)return'Пролет';if(m>=6&&m<=8)return'Лято';if(m>=9&&m<=11)return'Есен';return'Зима'; }
+
+// ══════════════════════════════════════════════
 // VIEWS
-// ════════════════════════════════════════
+// ══════════════════════════════════════════════
 function show(v){
-  ['dash','diary','notif','ai'].forEach(x=>{
+  ['dash','notif','ai'].forEach(x=>{
     document.getElementById('v-'+x).style.display=x===v?'':'none';
     document.getElementById('nb-'+x).classList.toggle('on',x===v);
   });
   if(v==='dash') renderDash();
-  if(v==='diary') renderDiary();
   if(v==='notif') renderNotif();
   if(v==='ai') renderAISel();
 }
 
-// ════════════════════════════════════════
+// ══════════════════════════════════════════════
 // DASHBOARD
-// ════════════════════════════════════════
+// ══════════════════════════════════════════════
 function setF(f){
   curFilter=f;
-  ['all','urgent','warn','ok'].forEach(x=>{
-    document.getElementById('f-'+x)?.classList.toggle('on',x===f);
-  });
+  document.querySelectorAll('.sfbtn').forEach(b=>b.classList.remove('on'));
+  document.getElementById('sf-'+f)?.classList.add('on');
   renderHiveList();
 }
 
@@ -441,18 +452,26 @@ function renderDash(){
   const total=S.hives.length;
   const urg=S.hives.filter(h=>h.status==='urgent').length;
   const warn=S.hives.filter(h=>h.status==='warn').length;
-  const honey=S.hives.reduce((s,h)=>s+(parseFloat(h.honey)||0),0);
-  document.getElementById('stats-row').innerHTML=[
-    {i:'🏠',v:total,l:'Кошери'},
-    {i:'🍯',v:honey.toFixed(1)+'кг',l:'Мед'},
-    {i:'🚨',v:urg,l:'Спешни',c:urg>0?'var(--red)':''},
-    {i:'⚠️',v:warn,l:'Внимание',c:warn>0?'var(--orange)':''},
-  ].map(s=>`<div class="stat"><div class="stat-i">${s.i}</div><div class="stat-v" style="${s.c?'color:'+s.c:''}">${s.v}</div><div class="stat-l">${s.l}</div></div>`).join('');
+  const ok=S.hives.filter(h=>h.status==='ok').length;
+
+  // Stat filter buttons
+  document.getElementById('sfrow').innerHTML=[
+    {id:'all',i:'🏠',v:total,l:'Кошери'},
+    {id:'urgent',i:'🚨',v:urg,l:'Спешни',c:urg>0?'color:var(--red)':''},
+    {id:'warn',i:'⚠️',v:warn,l:'Внимание',c:warn>0?'color:var(--orange)':''},
+    {id:'ok',i:'🟢',v:ok,l:'Добри'},
+  ].map(s=>`<button class="sfbtn${curFilter===s.id?' on':''}" id="sf-${s.id}" onclick="setF('${s.id}')">
+    <div class="sfi">${s.i}</div>
+    <div class="sfv" style="${s.c||''}">${s.v}</div>
+    <div class="sfl">${s.l}</div>
+  </button>`).join('');
+
   // Header alerts
-  const alertChips=[];
-  if(urg>0) alertChips.push(`<span class="urgchip">🚨 ${urg} спешни</span>`);
-  if(warn>0) alertChips.push(`<span class="urgchip" style="background:#f9731620;border-color:#f9731650;color:#fed7aa">⚠️ ${warn} внимание</span>`);
-  document.getElementById('hdr-alerts').innerHTML=alertChips.join('');
+  const chips=[];
+  if(urg>0) chips.push(`<span class="urgchip">🚨 ${urg} спешни</span>`);
+  if(warn>0) chips.push(`<span class="warnchip">⚠️ ${warn} внимание</span>`);
+  document.getElementById('hdr-alerts').innerHTML=chips.join('');
+
   renderHiveList();
   renderBadge();
   save();
@@ -464,31 +483,30 @@ function renderHiveList(){
   if(curFilter==='urgent') hives=hives.filter(h=>h.status==='urgent');
   else if(curFilter==='warn') hives=hives.filter(h=>h.status==='warn');
   else if(curFilter==='ok') hives=hives.filter(h=>h.status==='ok');
-  hives.sort((a,b)=>{const o={urgent:0,warn:1,ok:2};return (o[a.status]||2)-(o[b.status]||2)||parseInt(a.number||0)-parseInt(b.number||0);});
-  const si={ok:'🟢',warn:'🟡',urgent:'🔴'};
+  hives.sort((a,b)=>{
+    const o={urgent:0,warn:1,ok:2,reset:3};
+    return (o[a.status]||2)-(o[b.status]||2)||parseInt(a.number||0)-parseInt(b.number||0);
+  });
   const c=document.getElementById('hive-list');
   if(!hives.length){
-    c.innerHTML=`<div class="empty"><div class="empty-i">🐝</div><div>${S.hives.length?'Няма кошери в тази категория':'Добави първия кошер с + Нов кошер'}</div></div>`;
+    c.innerHTML=`<div class="empty"><div class="empty-i">🐝</div><div>${S.hives.length?'Няма кошери в тази категория':'Напиши "добави кошер 1" за да започнеш'}</div></div>`;
     return;
   }
   c.innerHTML=hives.map(h=>{
-    const str=h.strength||5;
-    const bars=Array.from({length:10},(_,i)=>{
-      const on=i<str;
-      const col=on?(str>=7?'#166534':str>=4?'#d97706':'#991b1b'):'#e5d9be';
-      return `<div class="sb" style="background:${col}"></div>`;
-    }).join('');
-    const dc=h.daysAgo>=21?'var(--red)':h.daysAgo>=14?'var(--orange)':'var(--green)';
+    const sl=strLabel(h.strength);
+    const dotCls={ok:'sd-ok',warn:'sd-warn',urgent:'sd-urgent',reset:'sd-gray'}[h.status]||'sd-ok';
+    const dotTxt={ok:'🟢',warn:'🟡',urgent:'🔴',reset:'⚫'}[h.status]||'🟢';
+    const dc=h.daysAgo>=21?'color:var(--red)':h.daysAgo>=14?'color:var(--orange)':'color:var(--green)';
     return `<div class="hrow" onclick="openHive(${h.id})">
       <div class="hnum">${h.number||h.id}</div>
       <div class="hinfo">
         <div class="hname">${h.name||('Кошер '+(h.number||h.id))}</div>
-        <div class="hmeta">📍${h.location||'—'} &nbsp;👑${h.queenYear||'?'} &nbsp;🍯${h.honey||0}кг</div>
-        <div class="sbar">${bars}</div>
+        <div class="hmeta">📍${h.location||'—'} &nbsp;👑${h.queenYear||'?'}</div>
+        <span class="str-badge ${sl.cls}">${sl.txt}</span>
       </div>
-      <div style="text-align:right;flex-shrink:0">
-        <div style="font-size:22px">${si[h.status]||'🟢'}</div>
-        <div style="color:${dc};font-size:12px;font-weight:700;margin-top:3px">${h.daysAgo!==undefined?h.daysAgo+'д':'—'}</div>
+      <div style="text-align:center;flex-shrink:0">
+        <div style="font-size:22px">${dotTxt}</div>
+        <div style="font-size:11px;font-weight:700;margin-top:3px;${h.daysAgo!==null&&h.daysAgo!==undefined?dc:'color:var(--muted)'}">${h.daysAgo!==null&&h.daysAgo!==undefined?h.daysAgo+'д':'—'}</div>
       </div>
     </div>`;
   }).join('');
@@ -501,27 +519,50 @@ function renderBadge(){
   b.textContent=n; b.style.display=n>0?'flex':'none';
 }
 
-// ════════════════════════════════════════
+// ══════════════════════════════════════════════
 // HIVE DETAIL
-// ════════════════════════════════════════
+// ══════════════════════════════════════════════
 function openHive(id){
   const h=S.hives.find(x=>x.id===id); if(!h) return;
   calcStatus(h);
+  const sc={ok:'b-ok',warn:'b-warn',urgent:'b-urgent',reset:'b-gray'};
+  const sl2={ok:'✓ Добър',warn:'⚠ Внимание',urgent:'🚨 Спешно',reset:'⚫ Нулиран'};
+  const sl=strLabel(h.strength);
+  const qc=queenColor(h.queenYear);
   const qAge=new Date().getFullYear()-(parseInt(h.queenYear)||new Date().getFullYear());
   const tasks=(h.tasks||[]).filter(t=>!t.done);
-  const sc={ok:'b-ok',warn:'b-warn',urgent:'b-urgent'};
-  const sl={ok:'✓ Добър',warn:'⚠ Внимание',urgent:'🚨 Спешно'};
-  const str=h.strength||5;
-  const bars=Array.from({length:10},(_,i)=>{const on=i<str;const col=on?(str>=7?'#166534':str>=4?'#d97706':'#991b1b'):'#e5d9be';return `<div style="width:13px;height:18px;border-radius:3px;background:${col}"></div>`;}).join('');
   const alertsHtml=(h.alerts||[]).map(a=>`<div style="display:flex;gap:8px;padding:9px 11px;background:var(--red-bg);border:1px solid var(--red-b);border-radius:9px;margin-bottom:6px;font-size:13px;color:var(--text);line-height:1.4">${a}</div>`).join('');
   const tasksHtml=tasks.length?`<div class="stitle mt12" style="margin-bottom:7px">📋 Задачи (${tasks.length})</div>`+
     tasks.map(t=>`<div style="display:flex;gap:9px;align-items:flex-start;padding:10px 12px;background:var(--bg);border:1px solid var(--border);border-radius:10px;margin-bottom:5px">
       <button onclick="doneTask(${id},'${t.id}')" style="width:26px;height:26px;border-radius:7px;border:2px solid var(--border2);background:none;cursor:pointer;color:var(--green);font-size:15px;flex-shrink:0;display:flex;align-items:center;justify-content:center">✓</button>
       <div style="flex:1;font-size:13px;line-height:1.4;color:var(--text)">${t.text}</div>
     </div>`).join(''):'';
-  const notesHtml=(h.notes||[]).length===0?
-    `<div class="empty" style="padding:22px"><div>Няма записи — добави от горния ред</div></div>`:
-    (h.notes||[]).slice(0,20).map(n=>`<div class="dentry"><div class="dentry-txt">${n.text}</div><div class="dentry-date">📅 ${n.date} ${n.time||''}</div></div>`).join('');
+
+  // Queen marking display
+  const marked=h.queenMarked===true;
+  const queenMarkHtml=marked
+    ?`<div style="display:flex;align-items:center;gap:6px;margin-top:4px"><span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:${qc.hex};border:1.5px solid #0003"></span><span style="color:var(--text2);font-size:12px">Маркирана — ${qc.name}</span></div>`
+    :`<div style="color:var(--muted);font-size:12px;margin-top:4px">Немаркирана</div>`;
+
+  // Пити display
+  const pitiHtml=`<div class="piti-grid">
+    <div><div class="piti-num">${h.piti!==undefined&&h.piti!==null?h.piti:'—'}</div><div class="piti-lbl">В плодника</div></div>
+    <div style="display:flex;align-items:stretch;justify-content:center"><div class="piti-div"></div></div>
+    <div><div class="piti-num">${h.pitiZad!==undefined&&h.pitiZad!==null?h.pitiZad:'—'}</div><div class="piti-lbl">Зад дъска</div></div>
+  </div>`;
+
+  // Notes sorted by date
+  const notes=(h.notes||[]).slice().sort((a,b)=>new Date(b.ts||0)-new Date(a.ts||0));
+  const notesHtml=notes.length===0
+    ?`<div class="empty" style="padding:22px"><div>Въведи информация от полето по-горе</div></div>`
+    :notes.map(n=>`<div class="dentry${n.type==='reset'?' dentry-reset':''}">
+        <div class="dentry-date">📅 ${n.date} ${n.time||''}</div>
+        <div class="dentry-txt">${n.text}</div>
+        ${n.type!=='reset'?`<div class="dentry-actions">
+          <button class="dact" onclick="openEditNote(${id},'${n.id}')">✏️ Редактирай</button>
+          <button class="dact dact-del" onclick="deleteNote(${id},'${n.id}')">🗑️ Изтрий</button>
+        </div>`:''}
+      </div>`).join('');
 
   document.getElementById('ov-hive-body').innerHTML=`
     <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:13px">
@@ -532,79 +573,171 @@ function openHive(id){
       <button onclick="document.getElementById('ov-hive').style.display='none'" style="background:none;border:none;font-size:26px;cursor:pointer;color:var(--muted);padding:3px">✕</button>
     </div>
     <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:13px">
-      <span class="badge ${sc[h.status]}">${sl[h.status]}</span>
+      <span class="badge ${sc[h.status]||'b-ok'}">${sl2[h.status]||'✓ Добър'}</span>
       ${h.location?`<span class="badge" style="background:var(--bg);border:1px solid var(--border);color:var(--text2)">📍 ${h.location}</span>`:''}
       ${h.type?`<span class="badge" style="background:var(--bg);border:1px solid var(--border);color:var(--text2)">🏠 ${h.type}</span>`:''}
     </div>
-    <div class="igrid">
-      <div class="ibox"><div class="ibox-l">Матка от</div><div class="ibox-v" style="${qAge>=3?'color:var(--red)':''}">${h.queenYear||'—'}${h.queenYear?' ('+qAge+' год.)':''}</div></div>
-      <div class="ibox"><div class="ibox-l">Мед</div><div class="ibox-v">${h.honey||0} кг</div></div>
-      <div class="ibox"><div class="ibox-l">Посл. преглед</div><div class="ibox-v" style="${h.daysAgo>14?'color:var(--red)':''}">${h.lastInspection||'—'} ${h.daysAgo!==undefined?'('+h.daysAgo+'д)':''}</div></div>
-      <div class="ibox"><div class="ibox-l">Магазин</div><div class="ibox-v">${h.hasSuper?'✅ Да':'❌ Не'}</div></div>
-      <div class="ibox"><div class="ibox-l">Вароа лечение</div><div class="ibox-v">${h.varroaTreatment||'—'}</div></div>
-      <div class="ibox"><div class="ibox-l">Бележки</div><div class="ibox-v">${(h.notes||[]).length} записа</div></div>
+
+    <!-- INPUT IN HIVE PROFILE -->
+    <div style="background:var(--amber-l);border:1px solid #fcd34d;border-radius:12px;padding:11px 13px;margin-bottom:13px">
+      <div style="color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:7px">✍️ Въведи информация за кошера</div>
+      <div style="display:flex;gap:8px;align-items:flex-end">
+        <textarea class="mi" id="hive-inp-${id}" rows="1" style="background:#fff;flex:1"
+          placeholder="напр: 8 пити, 2 зад дъска, 3 пило, много мед"
+          oninput="autoResize(this)"
+          onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendHiveInput(${id})}"></textarea>
+        <button class="sbtn" onclick="sendHiveInput(${id})" style="flex-shrink:0">➤</button>
+      </div>
     </div>
-    <div style="margin-bottom:13px">
-      <div class="ibox-l" style="margin-bottom:6px">Сила на семейството (${str}/10)</div>
-      <div style="display:flex;gap:3px">${bars}</div>
+
+    <!-- FIELDS GRID -->
+    <div class="fgrid">
+      <div class="fbox">
+        <div class="fbox-lbl">Майка от</div>
+        <div class="fbox-val">${h.queenYear||'—'}${h.queenDate?' / '+h.queenDate:''}</div>
+        ${queenMarkHtml}
+      </div>
+      <div class="fbox">
+        <div class="fbox-lbl">Последен преглед</div>
+        <div class="fbox-val" style="${h.daysAgo>=21?'color:var(--red)':''}">${h.lastInspection||'—'}</div>
+        <div class="fbox-sub">${h.daysAgo!==null&&h.daysAgo!==undefined?h.daysAgo+' дни назад':'—'}</div>
+      </div>
+      <div class="fbox">
+        <div class="fbox-lbl">Мед</div>
+        <div class="fbox-val">${honeyLabel(h.honey)}</div>
+      </div>
+      <div class="fbox">
+        <div class="fbox-lbl">Пило</div>
+        <div class="fbox-val">${h.pilo!==undefined&&h.pilo!==null?h.pilo+' пити':'—'}</div>
+      </div>
+      <div class="fbox fbox-full">
+        <div class="fbox-lbl">Брой Пити / Зад Дъска</div>
+        ${pitiHtml}
+      </div>
+      <div class="fbox fbox-full">
+        <div class="fbox-lbl">Сила на семейството</div>
+        <span class="str-badge ${sl.cls}">${sl.txt}</span>
+      </div>
     </div>
+
     ${alertsHtml}
     ${tasksHtml}
-    <div id="hive-ai-res"></div>
+    <div id="hive-ai-res-${id}"></div>
+
     <div class="g8" style="margin-bottom:9px;flex-wrap:wrap">
-      <button class="btn btn-green" style="flex:1;min-width:140px" onclick="markInspection(${id})">✅ Преглед днес</button>
       <button class="btn btn-purple" style="flex:1;min-width:140px" onclick="hiveAI(${id})">🤖 AI Анализ</button>
+      <button class="btn btn-ghost" style="flex:1;min-width:140px" onclick="startEdit(${id})">✏️ Редактирай</button>
     </div>
-    <div class="g8" style="margin-bottom:14px">
-      <button class="btn btn-ghost" style="flex:1" onclick="startEdit(${id})">✏️ Редактирай</button>
-      <button class="btn btn-red" style="flex:1" onclick="confirmDelete(${id})">🗑️ Изтрий</button>
-    </div>
-    <div class="stitle" style="margin-bottom:9px">📖 История (${(h.notes||[]).length})</div>
+    <button class="btn btn-orange btn-full" style="margin-bottom:4px" onclick="confirmReset(${id})">🔄 Нулиране на кошера</button>
+
+    <div class="stitle mt12" style="margin-bottom:9px">📖 История (${(h.notes||[]).length})</div>
     ${notesHtml}
   `;
   document.getElementById('ov-hive').style.display='flex';
 }
 
-function markInspection(id){
-  const h=S.hives.find(x=>x.id===id); if(!h) return;
-  h.lastInspection=new Date().toISOString().split('T')[0];
-  h.flags=h.flags||{}; h.flags.swarm=false; h.flags.noQueen=false;
-  addNote(id,'✅ Извършен преглед.','inspection');
-  calcStatus(h); save(); openHive(id); renderBadge();
-  toast('✅ Прегледът е записан');
+// ══════════════════════════════════════════════
+// INPUT IN HIVE PROFILE
+// ══════════════════════════════════════════════
+function sendHiveInput(hiveId){
+  const el=document.getElementById('hive-inp-'+hiveId);
+  if(!el) return;
+  const text=el.value.trim(); if(!text) return;
+  el.value=''; el.style.height='auto';
+  processText(text, hiveId);
 }
 
-function doneTask(hiveId,taskId){
-  const h=S.hives.find(x=>x.id===hiveId); if(!h) return;
-  const t=(h.tasks||[]).find(x=>x.id===taskId); if(!t) return;
-  t.done=true; t.doneDate=new Date().toLocaleDateString('bg-BG');
-  addNote(hiveId,'✅ Задача изпълнена: '+t.text,'task');
-  save(); openHive(hiveId); renderBadge();
-  toast('✅ Задачата е изпълнена');
-}
-
-function confirmDelete(id){
+// ══════════════════════════════════════════════
+// RESET HIVE
+// ══════════════════════════════════════════════
+function confirmReset(id){
   const h=S.hives.find(x=>x.id===id); if(!h) return;
-  if(confirm('Изтрий Кошер '+(h.number||id)+'?\nВсички данни ще се изгубят!')){
-    S.hives=S.hives.filter(x=>x.id!==id);
-    save(); document.getElementById('ov-hive').style.display='none';
-    renderDash(); renderDiary(); renderAISel(); renderBadge();
-    toast('🗑️ Кошер '+(h.number||id)+' е изтрит');
+  if(confirm('Нулирай Кошер '+(h.number||id)+'?\nВсички полета ще се изчистят.\nИсторията се запазва.')){
+    const now=new Date();
+    addNote(id,'НУЛИРАН','reset');
+    h.lastInspection=null; h.queenYear=null; h.queenDate=null; h.queenMarked=false;
+    h.honey=null; h.piti=null; h.pitiZad=null; h.pilo=null; h.strength=null;
+    h.flags={}; h.tasks=[]; h.reset=true;
+    calcStatus(h); save(); openHive(id); renderDash(); renderBadge();
+    toast('🔄 Кошер '+(h.number||id)+' е нулиран');
   }
 }
 
-// ════════════════════════════════════════
+// ══════════════════════════════════════════════
+// MARK INSPECTION
+// ══════════════════════════════════════════════
+function markInspection(id){
+  const h=S.hives.find(x=>x.id===id); if(!h) return;
+  h.lastInspection=new Date().toISOString().split('T')[0];
+  h.reset=false;
+  h.flags=h.flags||{}; h.flags.swarm=false; h.flags.noQueen=false;
+  addNote(id,'✅ Извършен преглед.','inspection');
+  calcStatus(h); save(); openHive(id); renderBadge();
+}
+
+// ══════════════════════════════════════════════
+// DONE TASK
+// ══════════════════════════════════════════════
+function doneTask(hiveId,taskId){
+  const h=S.hives.find(x=>x.id===hiveId); if(!h) return;
+  const t=(h.tasks||[]).find(x=>x.id===taskId); if(!t) return;
+  t.done=true;
+  addNote(hiveId,'✅ Задача изпълнена: '+t.text,'task');
+  save(); openHive(hiveId); renderBadge();
+}
+
+// ══════════════════════════════════════════════
+// NOTES — edit/delete
+// ══════════════════════════════════════════════
+function addNote(hiveId,text,type){
+  const h=S.hives.find(x=>x.id==hiveId); if(!h) return;
+  if(!h.notes) h.notes=[];
+  const now=new Date();
+  h.notes.push({
+    id:'n'+Date.now()+Math.random().toString(36).slice(2),
+    text, type:type||'note',
+    date:now.toLocaleDateString('bg-BG'),
+    time:now.toLocaleTimeString('bg-BG',{hour:'2-digit',minute:'2-digit'}),
+    ts:now.toISOString()
+  });
+}
+
+function openEditNote(hiveId,noteId){
+  const h=S.hives.find(x=>x.id===hiveId); if(!h) return;
+  const n=(h.notes||[]).find(x=>x.id===noteId); if(!n) return;
+  document.getElementById('en-hive-id').value=hiveId;
+  document.getElementById('en-note-id').value=noteId;
+  document.getElementById('en-text').value=n.text;
+  document.getElementById('ov-edit-note').style.display='flex';
+}
+
+function saveEditNote(){
+  const hiveId=parseInt(document.getElementById('en-hive-id').value);
+  const noteId=document.getElementById('en-note-id').value;
+  const text=document.getElementById('en-text').value.trim();
+  if(!text) return;
+  const h=S.hives.find(x=>x.id===hiveId); if(!h) return;
+  const n=(h.notes||[]).find(x=>x.id===noteId); if(!n) return;
+  n.text=text; n.edited=true;
+  save(); document.getElementById('ov-edit-note').style.display='none';
+  openHive(hiveId); toast('✅ Записът е обновен');
+}
+
+function deleteNote(hiveId,noteId){
+  if(!confirm('Изтрий този запис?')) return;
+  const h=S.hives.find(x=>x.id===hiveId); if(!h) return;
+  h.notes=(h.notes||[]).filter(x=>x.id!==noteId);
+  save(); openHive(hiveId); toast('🗑️ Записът е изтрит');
+}
+
+// ══════════════════════════════════════════════
 // ADD / EDIT HIVE
-// ════════════════════════════════════════
+// ══════════════════════════════════════════════
 function openAddHive(){
   editId=null;
   document.getElementById('add-title').textContent='🐝 Нов кошер';
-  document.getElementById('nh-num').value='';
-  document.getElementById('nh-name').value='';
-  document.getElementById('nh-loc').value='';
+  ['nh-num','nh-name','nh-loc'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('nh-queen').value=new Date().getFullYear();
-  document.getElementById('nh-str').value=5;
-  document.getElementById('nh-honey').value=0;
   document.getElementById('ov-add').style.display='flex';
   setTimeout(()=>document.getElementById('nh-num').focus(),300);
 }
@@ -617,94 +750,41 @@ function startEdit(id){
   document.getElementById('nh-name').value=h.name||'';
   document.getElementById('nh-loc').value=h.location||'';
   document.getElementById('nh-queen').value=h.queenYear||'';
-  document.getElementById('nh-str').value=h.strength||5;
-  document.getElementById('nh-honey').value=h.honey||0;
   document.getElementById('ov-hive').style.display='none';
   document.getElementById('ov-add').style.display='flex';
 }
-
 function closeAdd(){ document.getElementById('ov-add').style.display='none'; editId=null; }
 
 function saveHive(){
   const num=document.getElementById('nh-num').value.trim();
-  if(!num){ toast('⚠️ Въведи номер на кошера!'); return; }
+  if(!num){ toast('⚠️ Въведи номер!'); return; }
   if(editId){
     const h=S.hives.find(x=>x.id===editId); if(!h) return;
-    h.number=num;
-    h.name=document.getElementById('nh-name').value.trim();
+    h.number=num; h.name=document.getElementById('nh-name').value.trim();
     h.location=document.getElementById('nh-loc').value.trim();
-    h.queenYear=parseInt(document.getElementById('nh-queen').value)||new Date().getFullYear();
+    h.queenYear=parseInt(document.getElementById('nh-queen').value)||h.queenYear;
     h.type=document.getElementById('nh-type').value;
-    h.strength=parseInt(document.getElementById('nh-str').value)||5;
-    h.honey=parseFloat(document.getElementById('nh-honey').value)||0;
     calcStatus(h); save(); closeAdd(); renderDash(); openHive(editId);
     toast('✅ Кошерът е обновен');
   } else {
-    const exists=S.hives.find(x=>String(x.number)===String(num));
-    if(exists){ toast('⚠️ Кошер '+num+' вече съществува!'); return; }
+    if(S.hives.find(x=>String(x.number)===String(num))){ toast('⚠️ Кошер '+num+' вече съществува!'); return; }
     const h={
       id:Date.now(), number:num,
       name:document.getElementById('nh-name').value.trim(),
       location:document.getElementById('nh-loc').value.trim(),
       queenYear:parseInt(document.getElementById('nh-queen').value)||new Date().getFullYear(),
       type:document.getElementById('nh-type').value,
-      strength:parseInt(document.getElementById('nh-str').value)||5,
-      honey:parseFloat(document.getElementById('nh-honey').value)||0,
-      hasSuper:false, lastInspection:new Date().toISOString().split('T')[0],
-      notes:[], tasks:[], flags:{}, status:'ok', alerts:[]
+      queenMarked:false, strength:null, honey:null, piti:null, pitiZad:null, pilo:null,
+      lastInspection:null, notes:[], tasks:[], flags:{}, status:'ok', alerts:[], reset:false
     };
-    S.hives.push(h); calcStatus(h); save(); closeAdd();
-    renderDash(); renderDiary(); renderAISel();
+    S.hives.push(h); calcStatus(h); save(); closeAdd(); renderDash(); renderAISel();
     toast('✅ Кошер '+num+' е добавен!');
   }
 }
 
-// ════════════════════════════════════════
-// DIARY
-// ════════════════════════════════════════
-function addNote(hiveId,text,type){
-  const h=S.hives.find(x=>x.id==hiveId); if(!h) return;
-  if(!h.notes) h.notes=[];
-  const now=new Date();
-  h.notes.unshift({
-    id:Date.now(), text, type:type||'note',
-    date:now.toLocaleDateString('bg-BG'),
-    time:now.toLocaleTimeString('bg-BG',{hour:'2-digit',minute:'2-digit'}),
-    ts:now.toISOString()
-  });
-}
-
-function renderDiary(){
-  const sel=document.getElementById('diary-filter');
-  const prev=sel.value;
-  sel.innerHTML='<option value="">Всички кошери</option>'+
-    S.hives.map(h=>`<option value="${h.id}">Кошер ${h.number||h.id}${h.name?' — '+h.name:''}</option>`).join('');
-  if(prev) sel.value=prev;
-  const hiveId=sel.value;
-  let entries=[];
-  if(!hiveId){
-    S.hives.forEach(h=>(h.notes||[]).forEach(n=>entries.push({...n,hn:'Кошер '+(h.number||h.id)})));
-  } else {
-    const h=S.hives.find(x=>x.id==hiveId);
-    if(h) entries=(h.notes||[]).map(n=>({...n,hn:'Кошер '+(h.number||h.id)}));
-  }
-  entries.sort((a,b)=>new Date(b.ts||0)-new Date(a.ts||0));
-  const c=document.getElementById('diary-list');
-  if(!entries.length){
-    c.innerHTML=`<div class="empty"><div class="empty-i">📖</div><div>Въведи информация от горния ред с Gboard</div></div>`;
-    return;
-  }
-  c.innerHTML=entries.slice(0,60).map(n=>`
-    <div class="dentry">
-      ${!hiveId?`<div class="dentry-hive">${n.hn}</div>`:''}
-      <div class="dentry-txt">${n.text}</div>
-      <div class="dentry-date">📅 ${n.date} ${n.time||''}</div>
-    </div>`).join('');
-}
-
-// ════════════════════════════════════════
+// ══════════════════════════════════════════════
 // NOTIFICATIONS
-// ════════════════════════════════════════
+// ══════════════════════════════════════════════
 function renderNotif(){
   refreshAll();
   const c=document.getElementById('notif-list');
@@ -714,7 +794,7 @@ function renderNotif(){
     (h.tasks||[]).filter(t=>!t.done).forEach(t=>all.push({hid:h.id,hnum:h.number||h.id,text:'📋 '+t.text,sev:'task'}));
   });
   if(!all.length){
-    c.innerHTML=`<div class="empty"><div class="empty-i">✅</div><div style="color:var(--green);font-size:15px;margin-bottom:6px">Всичко е наред!</div><div>Няма активни сигнали</div></div>`;
+    c.innerHTML=`<div class="empty"><div class="empty-i">✅</div><div style="color:var(--green);font-size:15px;margin-bottom:6px">Всичко е наред!</div></div>`;
     return;
   }
   const cls={urgent:'n-u',warn:'n-w',task:'n-t'};
@@ -730,43 +810,35 @@ function renderNotif(){
     </div>`).join('');
 }
 
-// ════════════════════════════════════════
-// SEND INPUT — главната функция
-// ════════════════════════════════════════
+// ══════════════════════════════════════════════
+// SEND INPUT (от главния ред)
+// ══════════════════════════════════════════════
 function sendInput(){
   const inp=document.getElementById('main-inp');
-  const text=inp.value.trim();
-  if(!text) return;
+  const text=inp.value.trim(); if(!text) return;
   inp.value=''; inp.style.height='auto';
-  // Провери за текстови команди
   if(textCommand(text)) return;
-  // Иначе AI обработка
-  processText(text);
+  processText(text, null);
 }
 
-// Текстови команди без API
 function textCommand(text){
   const t=text.toLowerCase().trim();
-  // Добави кошер
   const addM=t.match(/(?:добави|нов|създай|регистрирай)\s+кошер\s+(\w+)/);
   if(addM){
     const num=addM[1];
     if(S.hives.find(h=>String(h.number)===String(num))){ toast('⚠️ Кошер '+num+' вече съществува'); return true; }
-    const h={id:Date.now(),number:num,name:'',location:'',queenYear:new Date().getFullYear(),type:'Дадан-Блат',strength:5,honey:0,hasSuper:false,lastInspection:new Date().toISOString().split('T')[0],notes:[],tasks:[],flags:{},status:'ok',alerts:[]};
-    S.hives.push(h); calcStatus(h); save();
-    renderDash(); renderDiary(); renderAISel();
+    const h={id:Date.now(),number:num,name:'',location:'',queenYear:new Date().getFullYear(),type:'Дадан-Блат',queenMarked:false,strength:null,honey:null,piti:null,pitiZad:null,pilo:null,lastInspection:null,notes:[],tasks:[],flags:{},status:'ok',alerts:[],reset:false};
+    S.hives.push(h); calcStatus(h); save(); renderDash(); renderAISel();
     toast('✅ Кошер '+num+' е добавен!');
     return true;
   }
-  // Премахни кошер
   const delM=t.match(/(?:премахни|изтрий|махни|изтри)\s+кошер\s+(\w+)/);
   if(delM){
     const num=delM[1];
     const h=S.hives.find(x=>String(x.number)===String(num));
     if(!h){ toast('⚠️ Кошер '+num+' не е намерен'); return true; }
-    if(confirm('Изтрий Кошер '+num+'? Всички данни ще се изгубят!')){
-      S.hives=S.hives.filter(x=>x.id!==h.id); save();
-      renderDash(); renderDiary(); renderAISel(); renderBadge();
+    if(confirm('Изтрий Кошер '+num+'?')){
+      S.hives=S.hives.filter(x=>x.id!==h.id); save(); renderDash(); renderAISel(); renderBadge();
       toast('🗑️ Кошер '+num+' е изтрит');
     }
     return true;
@@ -774,121 +846,149 @@ function textCommand(text){
   return false;
 }
 
-// ════════════════════════════════════════
+// ══════════════════════════════════════════════
 // PROCESS TEXT → AI → SAVE
-// ════════════════════════════════════════
-async function processText(text){
+// ══════════════════════════════════════════════
+async function processText(text, forcedHiveId){
   if(!S.settings.apiKey){
-    // Без API — покажи picker за да избере кошер
-    pendingEntry={text, type:'note'};
+    if(forcedHiveId){
+      applyParsed({entries:[{hiveNumbers:[],text,type:'note',piti:null,pitiZad:null,pilo:null,honey:null,strength:null,queenYear:null,queenMarked:null,newQueen:false,isCompleted:false,flags:{},tasks:[]}]}, forcedHiveId);
+      return;
+    }
+    pendingEntry={text, forcedHiveId:null};
     document.getElementById('pick-preview').textContent=text;
     buildPickList();
     document.getElementById('ov-pick').style.display='flex';
     return;
   }
-  showProc('🤖 AI анализира текста...', 'Разпознавам кошер и вид информация');
-  const ctx=S.hives.map(h=>`${h.number||h.id}: ${h.name||''} (${h.location||''}, матка ${h.queenYear||'?'}, сила ${h.strength||5}/10, посл.преглед ${h.lastInspection||'?'})`).join('\n');
+  showProc('🤖 Обработвам...','AI разпознава информацията');
+  const ctx=S.hives.map(h=>`${h.number||h.id}: ${h.name||''} (${h.location||''})`).join('\n');
   const sys=`Ти си AI за пчелар. Анализирай текста и върни САМО валиден JSON без никакъв друг текст.
 
 Налични кошери:
 ${ctx}
 
-JSON формат:
+JSON формат (върни ТОЧНО така):
 {
-  "entries": [
-    {
-      "hiveNumbers": ["23"],
-      "text": "Описание за записване в дневника",
-      "type": "observation|inspection|feeding|treatment|task|completed",
-      "isCompleted": true,
-      "flags": {"swarm":false,"noQueen":false,"disease":false,"lowFood":false},
-      "tasks": ["задача ако има"],
-      "updateFields": {"strength":7,"honey":12,"hasSuper":true,"varroaTreatment":"2026-03-25"}
-    }
-  ],
-  "unknown": true
+  "entries":[{
+    "hiveNumbers":["5"],
+    "text":"Описание за дневника",
+    "type":"inspection|observation|feeding|treatment|task|completed",
+    "piti":7,
+    "pitiZad":2,
+    "pilo":3,
+    "honey":"малко|има|много",
+    "strength":"weak|mid|strong",
+    "queenYear":2024,
+    "queenMarked":true,
+    "newQueen":false,
+    "isCompleted":true,
+    "flags":{"swarm":false,"noQueen":false,"disease":false,"lowFood":false},
+    "tasks":[]
+  }],
+  "unknown":false
 }
 
 ПРАВИЛА:
-- hiveNumbers: масив с номерата на споменатите кошери (само цифри). Ако не е споменат конкретен номер → hiveNumbers:[]
-- unknown: true САМО ако hiveNumbers е празен
-- isCompleted: true при "направих","сложих","прегледах","извърших","хранено","готово","поставих","свърших"
-- isCompleted: false при "трябва","планирам","нужно","ще","искам"
-- type="inspection" само при реален преглед
-- updateFields: само реално споменати стойности
+- hiveNumbers: масив с номерата на споменатите кошери. Ако няма споменат номер → hiveNumbers:[] и unknown:true
+- piti: брой пити в плодника (само число или null)
+- pitiZad: брой пити зад дъска (само число или null)
+- pilo: брой пити с пило (само число или null)
+- honey: "малко" при малко/слабо, "има" при нормално/достатъчно, "много" при много/добре
+- strength: "weak" при слабо/малко пчели, "mid" при средно, "strong" при силно/много пчели
+- queenMarked: true ако е споменато маркирана, false ако немаркирана, null ако не е споменато
+- newQueen: true ако е спомената нова/сменена майка
+- queenYear: годината на майката само ако е изрично спомената
+- type: inspection ако е преглед, feeding ако е хранене, treatment ако е лечение
+- isCompleted: true при "направих","сложих","прегледах","хранено","готово","свърших"
 - Никога не връщай празен entries масив`;
 
   try{
-    const res=await callAPI(text, sys);
+    const res=await callAPI(text,sys);
     hideProc();
     let parsed;
     try{ parsed=JSON.parse(res); }
-    catch{ parsed={entries:[{hiveNumbers:[],text,type:'note',isCompleted:false,flags:{},tasks:[],updateFields:{}}],unknown:true}; }
+    catch{ parsed={entries:[{hiveNumbers:[],text,type:'note',piti:null,pitiZad:null,pilo:null,honey:null,strength:null,queenYear:null,queenMarked:null,newQueen:false,isCompleted:false,flags:{},tasks:[]}],unknown:true}; }
 
-    const entries=parsed.entries||[];
-    if(!entries.length){ entries.push({hiveNumbers:[],text,type:'note',isCompleted:false,flags:{},tasks:[],updateFields:{}}); }
+    if(!parsed.entries||!parsed.entries.length) parsed.entries=[{hiveNumbers:[],text,type:'note',piti:null,pitiZad:null,pilo:null,honey:null,strength:null,queenYear:null,queenMarked:null,newQueen:false,isCompleted:false,flags:{},tasks:[]}];
 
-    // Провери дали е unknown (AI не разпозна кошер)
-    const firstEntry=entries[0];
-    if(parsed.unknown || !firstEntry.hiveNumbers || firstEntry.hiveNumbers.length===0){
-      pendingEntry={parsedEntries:entries, text};
+    const firstEntry=parsed.entries[0];
+    if(forcedHiveId){
+      applyParsed(parsed, forcedHiveId);
+      return;
+    }
+    if(parsed.unknown||!firstEntry.hiveNumbers||!firstEntry.hiveNumbers.length){
+      pendingEntry={parsed, text};
       document.getElementById('pick-preview').textContent=text;
       buildPickList();
       document.getElementById('ov-pick').style.display='flex';
       return;
     }
-
-    applyEntries(entries, null);
+    applyParsed(parsed, null);
   } catch(e){
     hideProc();
-    toast('⚠️ Грешка — запиши ръчно или провери API ключа');
+    toast('⚠️ Грешка с API — провери ключа и интернет');
   }
 }
 
-function applyEntries(entries, forcedHiveId){
+function applyParsed(parsed, forcedHiveId){
   let saved=0;
-  entries.forEach(entry=>{
+  const now=new Date();
+  const todayStr=now.toISOString().split('T')[0];
+  (parsed.entries||[]).forEach(entry=>{
     let targets=[];
     if(forcedHiveId){
       const h=S.hives.find(x=>x.id===forcedHiveId); if(h) targets=[h];
     } else {
       (entry.hiveNumbers||[]).forEach(n=>{
         const h=S.hives.find(x=>String(x.number)===String(n));
-        if(h && !targets.includes(h)) targets.push(h);
+        if(h&&!targets.includes(h)) targets.push(h);
       });
     }
     if(!targets.length) return;
     targets.forEach(h=>{
+      // Записваме в дневника
       addNote(h.id, entry.text||'', entry.type||'note');
-      if(entry.updateFields && Object.keys(entry.updateFields).length) Object.assign(h, entry.updateFields);
+      // Актуализираме полетата
+      if(entry.piti!==null&&entry.piti!==undefined) h.piti=parseInt(entry.piti);
+      if(entry.pitiZad!==null&&entry.pitiZad!==undefined) h.pitiZad=parseInt(entry.pitiZad);
+      if(entry.pilo!==null&&entry.pilo!==undefined) h.pilo=parseInt(entry.pilo);
+      if(entry.honey) h.honey=entry.honey;
+      if(entry.strength) h.strength=entry.strength;
+      if(entry.queenMarked!==null&&entry.queenMarked!==undefined) h.queenMarked=entry.queenMarked;
+      if(entry.newQueen){
+        h.queenYear=entry.queenYear||new Date().getFullYear();
+        h.queenDate=now.toLocaleDateString('bg-BG');
+        h.queenMarked=false;
+      } else if(entry.queenYear) {
+        h.queenYear=entry.queenYear;
+      }
       if(entry.flags) h.flags={...(h.flags||{}),...entry.flags};
-      if(entry.tasks && entry.tasks.length && !entry.isCompleted){
+      if(entry.tasks&&entry.tasks.length&&!entry.isCompleted){
         if(!h.tasks) h.tasks=[];
-        entry.tasks.forEach(t=>h.tasks.push({id:String(Date.now()+Math.random()),text:t,done:false}));
+        entry.tasks.forEach(t=>h.tasks.push({id:'t'+Date.now()+Math.random(),text:t,done:false}));
       }
-      if(entry.type==='inspection'){
-        h.lastInspection=new Date().toISOString().split('T')[0];
-        if(h.flags){h.flags.swarm=false;h.flags.noQueen=false;}
-      }
+      // Автоматично последен преглед при всяко въвеждане
+      h.lastInspection=todayStr;
+      h.reset=false;
+      if(entry.type==='inspection'){ h.flags=h.flags||{}; h.flags.swarm=false; h.flags.noQueen=false; }
       calcStatus(h); saved++;
     });
   });
   save();
   toast('✅ Записано в '+saved+(saved===1?' кошер':' кошера'));
-  if(document.getElementById('v-diary').style.display!=='none') renderDiary();
-  if(document.getElementById('v-dash').style.display!=='none') renderDash();
-  renderBadge();
+  // Обнови отворения профил ако е отворен
+  const ovHive=document.getElementById('ov-hive');
+  if(ovHive.style.display!=='none' && forcedHiveId) openHive(forcedHiveId);
+  renderDash(); renderBadge();
 }
 
-// ════════════════════════════════════════
+// ══════════════════════════════════════════════
 // HIVE PICKER
-// ════════════════════════════════════════
+// ══════════════════════════════════════════════
 function buildPickList(){
   const c=document.getElementById('pick-list');
-  if(!S.hives.length){
-    c.innerHTML=`<div style="text-align:center;color:var(--muted);padding:20px">Няма добавени кошери</div>`;
-    return;
-  }
+  if(!S.hives.length){ c.innerHTML=`<div style="text-align:center;color:var(--muted);padding:20px">Няма добавени кошери</div>`; return; }
   c.innerHTML=S.hives.map(h=>`
     <button class="hpick" onclick="pickHive(${h.id})">
       <div class="hpick-num">${h.number||h.id}</div>
@@ -902,77 +1002,61 @@ function buildPickList(){
 function pickHive(hiveId){
   document.getElementById('ov-pick').style.display='none';
   if(!pendingEntry) return;
-  if(pendingEntry.parsedEntries){
-    applyEntries(pendingEntry.parsedEntries, hiveId);
+  if(pendingEntry.parsed){
+    applyParsed(pendingEntry.parsed, hiveId);
   } else {
-    const h=S.hives.find(x=>x.id===hiveId); if(!h) return;
-    addNote(hiveId, pendingEntry.text, pendingEntry.type||'note');
-    calcStatus(h); save();
-    renderDiary(); renderDash(); renderBadge();
-    toast('✅ Записано в Кошер '+(h.number||hiveId));
+    applyParsed({entries:[{hiveNumbers:[],text:pendingEntry.text,type:'note',piti:null,pitiZad:null,pilo:null,honey:null,strength:null,queenYear:null,queenMarked:null,newQueen:false,isCompleted:false,flags:{},tasks:[]}]}, hiveId);
   }
   pendingEntry=null;
 }
 
-// ════════════════════════════════════════
+// ══════════════════════════════════════════════
 // AI ANALYSIS
-// ════════════════════════════════════════
+// ══════════════════════════════════════════════
 function renderAISel(){
   const sel=document.getElementById('ai-sel');
   sel.innerHTML='<option value="all">🌍 Целия пчелин</option>'+
     S.hives.map(h=>`<option value="${h.id}">Кошер ${h.number||h.id}${h.name?' — '+h.name:''}</option>`).join('');
 }
 
-function getSeason(){
-  const m=new Date().getMonth()+1;
-  if(m>=3&&m<=5) return 'Пролет';
-  if(m>=6&&m<=8) return 'Лято';
-  if(m>=9&&m<=11) return 'Есен';
-  return 'Зима';
-}
-
 async function runAI(){
-  if(!S.settings.apiKey){ toast('⚠️ Въведи API ключ в ⚙️ Настройки'); openSettings(); return; }
-  showProc('🤖 AI анализира...','Анализирам целия пчелин');
+  if(!S.settings.apiKey){ toast('⚠️ Въведи API ключ в ⚙️'); openSettings(); return; }
+  showProc('🤖 AI анализира...','');
   refreshAll();
   const hiveId=document.getElementById('ai-sel').value;
   const season=getSeason();
   let prompt;
   if(hiveId==='all'){
-    const sum=S.hives.map(h=>`Кошер ${h.number||h.id}: сила ${h.strength||'?'}/10, матка ${h.queenYear||'?'}, мед ${h.honey||0}кг, дни без преглед:${h.daysAgo||'?'}, статус:${h.status}, последни бележки:${(h.notes||[]).slice(0,2).map(n=>n.text).join('; ')||'няма'}`).join('\n');
-    prompt=`Ти си опитен пчелар с 30 год. опит.\nДата: ${new Date().toLocaleDateString('bg-BG')}, Сезон: ${season}\n\nПчелин:\n${sum}\n\nДай:\n1) Обща оценка на пчелина\n2) Топ 3 приоритета тази седмица\n3) Конкретни действия за проблемните кошери\n4) Сезонни препоръки за ${season}\n\nБъди конкретен и практичен. Отговаряй на български.`;
+    const sum=S.hives.map(h=>{
+      const sl=strLabel(h.strength);
+      return `Кошер ${h.number||h.id}: ${sl.txt}, мед:${honeyLabel(h.honey)}, пити:${h.piti||'?'}/${h.pitiZad||'?'}, пило:${h.pilo||'?'}, майка:${h.queenYear||'?'}, дни без преглед:${h.daysAgo||'?'}, статус:${h.status}`;
+    }).join('\n');
+    prompt=`Ти си опитен пчелар с 30 год. опит.\nДата: ${new Date().toLocaleDateString('bg-BG')}, Сезон: ${season}\n\nПчелин:\n${sum}\n\nДай:\n1) Обща оценка\n2) Топ 3 приоритета тази седмица\n3) Конкретни действия за проблемните кошери\n4) Сезонни препоръки за ${season}\n\nОтговаряй на български.`;
   } else {
-    const h=S.hives.find(x=>x.id==hiveId); if(!h){ hideProc(); return; }
-    const notes=(h.notes||[]).slice(0,8).map(n=>`${n.date}: ${n.text}`).join('\n');
-    prompt=`Ти си опитен пчелар.\nАнализирай Кошер ${h.number||h.id}:\nСезон: ${season}\nМатка: ${h.queenYear||'?'} г.\nСила: ${h.strength||'?'}/10\nМед: ${h.honey||0}кг\nМагазин: ${h.hasSuper?'да':'не'}\nДни без преглед: ${h.daysAgo||'?'}\nВароа: ${h.varroaTreatment||'неизв.'}\nИстория:\n${notes||'няма'}\n\nДай конкретна оценка и топ 3 действия за следващите 14 дни. Отговаряй на български.`;
+    const h=S.hives.find(x=>x.id==hiveId); if(!h){hideProc();return;}
+    const notes=(h.notes||[]).slice(-8).map(n=>`${n.date}: ${n.text}`).join('\n');
+    const sl=strLabel(h.strength);
+    prompt=`Ти си опитен пчелар.\nКошер ${h.number||h.id}:\nСезон: ${season}, Майка: ${h.queenYear||'?'}г., Сила: ${sl.txt}, Мед: ${honeyLabel(h.honey)}, Пити: ${h.piti||'?'} в плодника / ${h.pitiZad||'?'} зад дъска, Пило: ${h.pilo||'?'} пити, Дни без преглед: ${h.daysAgo||'?'}\nИстория:\n${notes||'няма'}\n\nОценка и топ 3 действия за следващите 14 дни. На български.`;
   }
   try{
-    const r=await callAPI(prompt,'Ти си опитен пчелар консултант. Давай конкретни практични съвети на български.');
+    const r=await callAPI(prompt,'Ти си опитен пчелар консултант. Отговаряй конкретно на български.');
     hideProc();
-    document.getElementById('ai-result').innerHTML=`
-      <div class="aibox">
-        <div class="aibox-hd">🤖 AI Анализ — ${new Date().toLocaleDateString('bg-BG')}</div>
-        <div class="aibox-txt">${r}</div>
-      </div>`;
-  } catch(e){
-    hideProc();
-    document.getElementById('ai-result').innerHTML=`<div class="aibox" style="background:var(--red-bg);border-color:var(--red-b)"><div class="aibox-hd" style="color:var(--red)">⚠️ Грешка</div><div class="aibox-txt">Провери API ключа и интернет връзката.</div></div>`;
-  }
+    document.getElementById('ai-result').innerHTML=`<div class="aibox"><div class="aibox-hd">🤖 AI Анализ — ${new Date().toLocaleDateString('bg-BG')}</div><div class="aibox-txt">${r}</div></div>`;
+  } catch(e){ hideProc(); toast('⚠️ Грешка — провери API ключа'); }
 }
 
 async function hiveAI(id){
   if(!S.settings.apiKey){ toast('⚠️ Въведи API ключ'); return; }
   const h=S.hives.find(x=>x.id===id); if(!h) return;
-  const el=document.getElementById('hive-ai-res');
+  const el=document.getElementById('hive-ai-res-'+id);
   if(el) el.innerHTML=`<div class="aibox"><div class="aibox-hd">🤖 Анализирам...</div><div class="aibox-txt">⏳</div></div>`;
-  const notes=(h.notes||[]).slice(0,6).map(n=>`${n.date}: ${n.text}`).join('\n');
-  const p=`Кошер ${h.number||h.id}. Сезон:${getSeason()}, матка ${h.queenYear||'?'}, сила ${h.strength||'?'}/10, мед ${h.honey||0}кг, дни без преглед:${h.daysAgo||'?'}, магазин:${h.hasSuper?'да':'не'}.\nИстория:\n${notes||'няма'}\n\nКратка оценка и топ 3 действия. На български.`;
+  const sl=strLabel(h.strength);
+  const notes=(h.notes||[]).slice(-6).map(n=>`${n.date}: ${n.text}`).join('\n');
+  const p=`Кошер ${h.number||h.id}. Сезон:${getSeason()}, майка:${h.queenYear||'?'}, сила:${sl.txt}, мед:${honeyLabel(h.honey)}, пити:${h.piti||'?'}/${h.pitiZad||'?'}, пило:${h.pilo||'?'}, дни без преглед:${h.daysAgo||'?'}.\nИстория:\n${notes||'няма'}\n\nКратка оценка и топ 3 действия. На български.`;
   try{
     const r=await callAPI(p,'Ти си опитен пчелар.');
     if(el) el.innerHTML=`<div class="aibox"><div class="aibox-hd">🤖 AI Препоръки</div><div class="aibox-txt">${r}</div></div>`;
-  } catch(e){
-    if(el) el.innerHTML=`<div class="aibox" style="background:var(--red-bg)"><div class="aibox-txt" style="color:var(--red)">Грешка при анализ</div></div>`;
-  }
+  } catch(e){ if(el) el.innerHTML=`<div class="aibox" style="background:var(--red-bg)"><div class="aibox-txt" style="color:var(--red)">Грешка при анализ</div></div>`; }
 }
 
 async function askQ(){
@@ -980,25 +1064,18 @@ async function askQ(){
   if(!S.settings.apiKey){ toast('⚠️ Въведи API ключ'); openSettings(); return; }
   const c=document.getElementById('ai-q-res');
   c.innerHTML=`<div class="aibox"><div class="aibox-txt">⏳ Обработвам...</div></div>`;
-  const ctx=S.hives.map(h=>`Кошер ${h.number||h.id}: сила ${h.strength||'?'}, матка ${h.queenYear||'?'}, посл.преглед ${h.lastInspection||'?'}`).join('\n');
+  const ctx=S.hives.map(h=>`Кошер ${h.number||h.id}: ${strLabel(h.strength).txt}, майка ${h.queenYear||'?'}`).join('\n');
   try{
-    const r=await callAPI(`Пчелин:\n${ctx}\n\nВъпрос: ${q}`,'Ти си опитен пчелар. Отговаряй конкретно и практично на български.');
+    const r=await callAPI(`Пчелин:\n${ctx}\n\nВъпрос: ${q}`,'Ти си опитен пчелар. Отговаряй практично на български.');
     c.innerHTML=`<div class="aibox"><div class="aibox-hd">🤖 Отговор</div><div class="aibox-txt">${r}</div></div>`;
     document.getElementById('ai-q').value='';
-  } catch(e){
-    c.innerHTML=`<div class="aibox" style="background:var(--red-bg)"><div class="aibox-txt" style="color:var(--red)">Грешка. Провери API ключа.</div></div>`;
-  }
+  } catch(e){ c.innerHTML=`<div class="aibox" style="background:var(--red-bg)"><div class="aibox-txt" style="color:var(--red)">Грешка. Провери API ключа.</div></div>`; }
 }
 
-async function callAPI(prompt, system){
+async function callAPI(prompt,system){
   const r=await fetch('https://api.anthropic.com/v1/messages',{
     method:'POST',
-    headers:{
-      'Content-Type':'application/json',
-      'x-api-key':S.settings.apiKey,
-      'anthropic-version':'2023-06-01',
-      'anthropic-dangerous-direct-browser-access':'true'
-    },
+    headers:{'Content-Type':'application/json','x-api-key':S.settings.apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
     body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system,messages:[{role:'user',content:prompt}]})
   });
   const d=await r.json();
@@ -1006,9 +1083,9 @@ async function callAPI(prompt, system){
   return d.content?.[0]?.text||'';
 }
 
-// ════════════════════════════════════════
+// ══════════════════════════════════════════════
 // SETTINGS
-// ════════════════════════════════════════
+// ══════════════════════════════════════════════
 function openSettings(){
   document.getElementById('s-name').value=S.settings.name||'';
   document.getElementById('s-key').value=S.settings.apiKey||'';
@@ -1033,31 +1110,16 @@ function exportData(){
 function importData(e){
   const f=e.target.files[0]; if(!f) return;
   const r=new FileReader();
-  r.onload=ev=>{
-    try{ const d=JSON.parse(ev.target.result); if(d.hives){ S=d; save(); location.reload(); } }
-    catch{ toast('⚠️ Грешен файл'); }
-  };
+  r.onload=ev=>{ try{const d=JSON.parse(ev.target.result);if(d.hives){S=d;save();location.reload();}}catch{toast('⚠️ Грешен файл');} };
   r.readAsText(f);
 }
 
-// ════════════════════════════════════════
-// PROCESSING OVERLAY
-// ════════════════════════════════════════
-function showProc(txt,sub){
-  document.getElementById('proc-txt').textContent=txt||'Обработвам...';
-  document.getElementById('proc-sub').textContent=sub||'';
-  document.getElementById('proc').style.display='flex';
-}
-function hideProc(){ document.getElementById('proc').style.display='none'; }
-
-// ════════════════════════════════════════
+// ══════════════════════════════════════════════
 // INIT
-// ════════════════════════════════════════
+// ══════════════════════════════════════════════
 load(); refreshAll(); renderDash(); renderBadge();
 document.getElementById('hdr-sub').textContent=(S.settings.name||'Пчелар')+' · AI Дневник';
-if(!S.settings.apiKey){
-  setTimeout(()=>toast('👋 Добре дошъл! Въведи API ключ в ⚙️ за AI функции',5000),1000);
-}
+if(!S.settings.apiKey) setTimeout(()=>toast('👋 Въведи API ключ в ⚙️ за AI функции',5000),1000);
 </script>
 </body>
 </html>
