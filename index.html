@@ -301,6 +301,14 @@ hr.dv{border:none;border-top:1px solid var(--border);margin:12px 0}
       <label class="lbl">Текст</label>
       <textarea class="edit-ta" id="en-text" rows="4"></textarea>
     </div>
+    <div id="en-inspection-row" style="margin-bottom:11px;display:none">
+      <label class="lbl">Обнови "Последен преглед" на тази дата</label>
+      <div style="display:flex;gap:8px;align-items:center">
+        <input type="checkbox" id="en-update-date" style="width:20px;height:20px;cursor:pointer;accent-color:var(--amber)">
+        <input type="date" class="inp" id="en-date" style="flex:1">
+      </div>
+      <div style="color:var(--muted);font-size:12px;margin-top:4px">Отметни ако искаш да смениш датата на последния преглед</div>
+    </div>
     <div class="g8">
       <button class="btn btn-ghost btn-full" onclick="document.getElementById('ov-edit-note').style.display='none'">Отказ</button>
       <button class="btn btn-amber btn-full" onclick="saveEditNote()">Запази</button>
@@ -342,6 +350,23 @@ hr.dv{border:none;border-top:1px solid var(--border);margin:12px 0}
 </div>
 
 <script>
+// ══════════════════════════════════════════════
+// DATE FORMAT DD-MM-YYYY
+// ══════════════════════════════════════════════
+function fmtDate(isoStr){
+  if(!isoStr) return '—';
+  const d=new Date(isoStr+'T00:00:00');
+  if(isNaN(d)) return isoStr;
+  const dd=String(d.getDate()).padStart(2,'0');
+  const mm=String(d.getMonth()+1).padStart(2,'0');
+  const yyyy=d.getFullYear();
+  return dd+'-'+mm+'-'+yyyy;
+}
+function isoToday(){
+  const n=new Date();
+  return n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')+'-'+String(n.getDate()).padStart(2,'0');
+}
+
 // ══════════════════════════════════════════════
 // STATE
 // ══════════════════════════════════════════════
@@ -599,7 +624,7 @@ function openHive(id){
       </div>
       <div class="fbox">
         <div class="fbox-lbl">Последен преглед</div>
-        <div class="fbox-val" style="${h.daysAgo>=21?'color:var(--red)':''}">${h.lastInspection||'—'}</div>
+        <div class="fbox-val" style="${h.daysAgo>=21?'color:var(--red)':''}">${fmtDate(h.lastInspection)}</div>
         <div class="fbox-sub">${h.daysAgo!==null&&h.daysAgo!==undefined?h.daysAgo+' дни':'—'}</div>
       </div>
       <div class="fbox">
@@ -668,7 +693,7 @@ function confirmReset(id){
 // ══════════════════════════════════════════════
 function markInspection(id){
   const h=S.hives.find(x=>x.id===id); if(!h) return;
-  h.lastInspection=new Date().toISOString().split('T')[0];
+  h.lastInspection=isoToday();
   h.reset=false;
   h.flags=h.flags||{}; h.flags.swarm=false; h.flags.noQueen=false;
   addNote(id,'✅ Извършен преглед.','inspection');
@@ -708,6 +733,10 @@ function openEditNote(hiveId,noteId){
   document.getElementById('en-hive-id').value=hiveId;
   document.getElementById('en-note-id').value=noteId;
   document.getElementById('en-text').value=n.text;
+  // Покажи датата за промяна
+  document.getElementById('en-inspection-row').style.display='block';
+  document.getElementById('en-update-date').checked=false;
+  document.getElementById('en-date').value=h.lastInspection||isoToday();
   document.getElementById('ov-edit-note').style.display='flex';
 }
 
@@ -719,8 +748,14 @@ function saveEditNote(){
   const h=S.hives.find(x=>x.id===hiveId); if(!h) return;
   const n=(h.notes||[]).find(x=>x.id===noteId); if(!n) return;
   n.text=text; n.edited=true;
+  // Обнови датата на последния преглед ако е отметнато
+  if(document.getElementById('en-update-date').checked){
+    const newDate=document.getElementById('en-date').value;
+    if(newDate){ h.lastInspection=newDate; calcStatus(h); }
+  }
   save(); document.getElementById('ov-edit-note').style.display='none';
-  openHive(hiveId); toast('✅ Записът е обновен');
+  openHive(hiveId); renderDash();
+  toast('✅ Записът е обновен');
 }
 
 function deleteNote(hiveId,noteId){
@@ -823,6 +858,26 @@ function sendInput(){
 
 function textCommand(text){
   const t=text.toLowerCase().trim();
+
+  // SORT: по сила
+  if(t.match(/подреди\s*(по\s*)?сила|сортирай\s*(по\s*)?сила/)){
+    S.hives.sort((a,b)=>{
+      const o={strong:0,mid:1,weak:2};
+      const ao=o[a.strength]??1, bo=o[b.strength]??1;
+      return ao-bo;
+    });
+    save(); renderDash();
+    toast('✅ Подредено от силни към слаби');
+    return true;
+  }
+  // SORT: по номер
+  if(t.match(/подреди\s*(по\s*)?(ред|номер|номера)|сортирай\s*(по\s*)?(ред|номер)/)){
+    S.hives.sort((a,b)=>parseInt(a.number||0)-parseInt(b.number||0));
+    save(); renderDash();
+    toast('✅ Подредено по номера');
+    return true;
+  }
+
   const addM=t.match(/(?:добави|нов|създай|регистрирай)\s+кошер\s+(\w+)/);
   if(addM){
     const num=addM[1];
@@ -964,10 +1019,7 @@ JSON формат (върни ТОЧНО така):
 
     if(!parsed.entries||!parsed.entries.length) parsed.entries=[{hiveNumbers:[],text,type:'note',piti:null,pitiZad:null,pilo:null,honey:null,strength:null,queenYear:null,queenMarked:null,newQueen:false,isCompleted:false,flags:{},tasks:[]}];
 
-    // DEBUG — показва какво е върнал AI (временно)
-    const e0=parsed.entries[0]||{};
-    console.log('AI parsed:', JSON.stringify(parsed));
-    toast('🔍 AI: пити='+e0.piti+' зад='+e0.pitiZad+' мед='+e0.honey+' сила='+e0.strength+' кошери='+JSON.stringify(e0.hiveNumbers), 6000);
+
 
     const firstEntry=parsed.entries[0];
     if(forcedHiveId){
@@ -991,7 +1043,7 @@ JSON формат (върни ТОЧНО така):
 function applyParsed(parsed, forcedHiveId){
   let saved=0;
   const now=new Date();
-  const todayStr=now.toISOString().split('T')[0];
+  const todayStr=isoToday();
   (parsed.entries||[]).forEach(entry=>{
     let targets=[];
     if(forcedHiveId){
@@ -1182,7 +1234,7 @@ function exportData(){
   const b=new Blob([JSON.stringify(S,null,2)],{type:'application/json'});
   const a=document.createElement('a');
   a.href=URL.createObjectURL(b);
-  a.download='pchelar_backup_'+new Date().toISOString().split('T')[0]+'.json';
+  a.download='pchelar_backup_'+isoToday()+'.json';
   a.click();
 }
 function importData(e){
