@@ -374,6 +374,7 @@ let S = { hives:[], settings:{ name:'Пчелар', apiKey:'', interval:21 } };
 let editId = null;
 let pendingEntry = null;
 let curFilter = 'all';
+let sortMode = 'status'; // 'status' | 'strength' | 'number'
 
 function save(){ try{ localStorage.setItem('ppro5', JSON.stringify(S)); }catch(e){} }
 function load(){
@@ -429,9 +430,9 @@ function strLabel(v){
 }
 
 function honeyLabel(v){
-  if(v==='малко'||v==='little') return '🟡 Малко';
-  if(v==='много'||v==='много'||v==='much') return '🟢 Много';
-  if(v==='има'||v==='has') return '🟢 Има';
+  if(v==='малко'||v==='little') return '<span style="color:var(--red);font-weight:700">🔴 Малко</span>';
+  if(v==='много'||v==='much') return '<span style="color:var(--green);font-weight:700">🟢 Много</span>';
+  if(v==='има'||v==='has') return '<span style="color:#b45309;font-weight:700">🟡 Има</span>';
   return v||'—';
 }
 
@@ -508,10 +509,16 @@ function renderHiveList(){
   if(curFilter==='urgent') hives=hives.filter(h=>h.status==='urgent');
   else if(curFilter==='warn') hives=hives.filter(h=>h.status==='warn');
   else if(curFilter==='ok') hives=hives.filter(h=>h.status==='ok');
-  hives.sort((a,b)=>{
+  if(sortMode==='strength'){
+    const so={strong:0,mid:1,weak:2};
+    hives.sort((a,b)=>(so[a.strength]??1)-(so[b.strength]??1));
+  } else if(sortMode==='number'){
+    hives.sort((a,b)=>parseInt(a.number||0)-parseInt(b.number||0));
+  } else {
+    // Default: по статус, после по номер
     const o={urgent:0,warn:1,ok:2,reset:3};
-    return (o[a.status]||2)-(o[b.status]||2)||parseInt(a.number||0)-parseInt(b.number||0);
-  });
+    hives.sort((a,b)=>(o[a.status]||2)-(o[b.status]||2)||parseInt(a.number||0)-parseInt(b.number||0));
+  }
   const c=document.getElementById('hive-list');
   if(!hives.length){
     c.innerHTML=`<div class="empty"><div class="empty-i">🐝</div><div>${S.hives.length?'Няма кошери в тази категория':'Напиши "добави кошер 1" за да започнеш'}</div></div>`;
@@ -861,19 +868,13 @@ function textCommand(text){
 
   // SORT: по сила
   if(t.match(/подреди\s*(по\s*)?сила|сортирай\s*(по\s*)?сила/)){
-    S.hives.sort((a,b)=>{
-      const o={strong:0,mid:1,weak:2};
-      const ao=o[a.strength]??1, bo=o[b.strength]??1;
-      return ao-bo;
-    });
-    save(); renderDash();
+    sortMode='strength'; renderDash();
     toast('✅ Подредено от силни към слаби');
     return true;
   }
   // SORT: по номер
   if(t.match(/подреди\s*(по\s*)?(ред|номер|номера)|сортирай\s*(по\s*)?(ред|номер)/)){
-    S.hives.sort((a,b)=>parseInt(a.number||0)-parseInt(b.number||0));
-    save(); renderDash();
+    sortMode='number'; renderDash();
     toast('✅ Подредено по номера');
     return true;
   }
@@ -1159,7 +1160,7 @@ async function runAI(){
   if(hiveId==='all'){
     const sum=S.hives.map(h=>{
       const sl=strLabel(h.strength);
-      return `Кошер ${h.number||h.id}: ${sl.txt}, мед:${honeyLabel(h.honey)}, пити:${h.piti||'?'}/${h.pitiZad||'?'}, пило:${h.pilo||'?'}, майка:${h.queenYear||'?'}, дни без преглед:${h.daysAgo||'?'}, статус:${h.status}`;
+      return `Кошер ${h.number||h.id}: ${sl.txt}, мед:${h.honey||'?'}, пити:${h.piti||'?'}/${h.pitiZad||'?'}, пило:${h.pilo||'?'}, майка:${h.queenYear||'?'}, дни без преглед:${h.daysAgo||'?'}, статус:${h.status}`;
     }).join('\n');
     prompt=`Ти си опитен пчелар с 30 год. опит.\nДата: ${new Date().toLocaleDateString('bg-BG')}, Сезон: ${season}\n\nПчелин:\n${sum}\n\nДай:\n1) Обща оценка\n2) Топ 3 приоритета тази седмица\n3) Конкретни действия за проблемните кошери\n4) Сезонни препоръки за ${season}\n\nОтговаряй на български.`;
   } else {
@@ -1182,7 +1183,7 @@ async function hiveAI(id){
   if(el) el.innerHTML=`<div class="aibox"><div class="aibox-hd">🤖 Анализирам...</div><div class="aibox-txt">⏳</div></div>`;
   const sl=strLabel(h.strength);
   const notes=(h.notes||[]).slice(-6).map(n=>`${n.date}: ${n.text}`).join('\n');
-  const p=`Кошер ${h.number||h.id}. Сезон:${getSeason()}, майка:${h.queenYear||'?'}, сила:${sl.txt}, мед:${honeyLabel(h.honey)}, пити:${h.piti||'?'}/${h.pitiZad||'?'}, пило:${h.pilo||'?'}, дни без преглед:${h.daysAgo||'?'}.\nИстория:\n${notes||'няма'}\n\nКратка оценка и топ 3 действия. На български.`;
+  const p=`Кошер ${h.number||h.id}. Сезон:${getSeason()}, майка:${h.queenYear||'?'}, сила:${sl.txt}, мед:${h.honey||'?'}, пити:${h.piti||'?'}/${h.pitiZad||'?'}, пило:${h.pilo||'?'}, дни без преглед:${h.daysAgo||'?'}.\nИстория:\n${notes||'няма'}\n\nКратка оценка и топ 3 действия. На български.`;
   try{
     const r=await callAPI(p,'Ти си опитен пчелар.');
     if(el) el.innerHTML=`<div class="aibox"><div class="aibox-hd">🤖 AI Препоръки</div><div class="aibox-txt">${r}</div></div>`;
