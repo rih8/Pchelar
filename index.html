@@ -19,7 +19,7 @@
   --sh:0 2px 14px #c8a04018;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{height:100%;overflow:hidden;font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--text)}
+html,body{height:100%;overflow:hidden;font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--text);font-size:17px}
 #app{display:flex;flex-direction:column;height:100vh;max-width:480px;margin:0 auto;box-shadow:0 0 60px #00000018}
 
 .hdr{background:linear-gradient(135deg,#7c2d12,#b45309,#d97706);padding:13px 15px 11px;flex-shrink:0;box-shadow:0 3px 12px #7c2d1240}
@@ -39,7 +39,7 @@ html,body{height:100%;overflow:hidden;font-family:'Source Sans 3',sans-serif;bac
 .sbtn:active{transform:scale(.91)}
 
 .nav{display:flex;background:var(--surface);border-bottom:2px solid var(--border);flex-shrink:0}
-.nb{flex:1;background:none;border:none;cursor:pointer;padding:9px 4px 8px;color:var(--muted);font-size:10px;font-family:'Source Sans 3',sans-serif;font-weight:700;border-bottom:2.5px solid transparent;transition:all .18s;display:flex;flex-direction:column;align-items:center;gap:2px;text-transform:uppercase;letter-spacing:.3px;position:relative}
+.nb{flex:1;background:none;border:none;cursor:pointer;padding:9px 4px 8px;color:var(--muted);font-size:12px;font-family:'Source Sans 3',sans-serif;font-weight:700;border-bottom:2.5px solid transparent;transition:all .18s;display:flex;flex-direction:column;align-items:center;gap:2px;text-transform:uppercase;letter-spacing:.3px;position:relative}
 .nb .ni{font-size:18px}
 .nb.on{color:var(--amber);border-bottom-color:var(--amber)}
 .nbadge{position:absolute;top:5px;right:calc(50% - 18px);background:var(--red);color:#fff;border-radius:50%;width:16px;height:16px;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center}
@@ -54,8 +54,8 @@ html,body{height:100%;overflow:hidden;font-family:'Source Sans 3',sans-serif;bac
 .sfbtn{flex:1;background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:9px 5px;text-align:center;cursor:pointer;transition:all .18s;box-shadow:var(--sh)}
 .sfbtn.on{border-color:var(--amber);background:var(--amber-l)}
 .sfbtn .sfi{font-size:17px}
-.sfbtn .sfv{color:var(--honey);font-weight:700;font-size:16px;margin-top:2px}
-.sfbtn .sfl{color:var(--muted);font-size:10px;margin-top:1px}
+.sfbtn .sfv{color:var(--honey);font-weight:700;font-size:18px;margin-top:2px}
+.sfbtn .sfl{color:var(--muted);font-size:12px;margin-top:1px}
 .sfbtn.on .sfv{color:var(--amber)}
 
 .card{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:var(--sh)}
@@ -67,11 +67,11 @@ html,body{height:100%;overflow:hidden;font-family:'Source Sans 3',sans-serif;bac
 .hrow:active{background:#fef3c7}
 .hnum{font-family:'Playfair Display',serif;font-size:24px;color:var(--honey);min-width:46px;text-align:center;font-weight:900}
 .hinfo{flex:1;min-width:0}
-.hname{font-size:14px;font-weight:700;color:var(--text)}
-.hmeta{font-size:11px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hname{font-size:16px;font-weight:700;color:var(--text)}
+.hmeta{font-size:13px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
 /* STRENGTH 3-LEVEL */
-.str-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;margin-top:5px}
+.str-badge{display:inline-flex;align-items:center;gap:4px;padding:4px 12px;border-radius:20px;font-size:13px;font-weight:700;margin-top:5px}
 .str-weak{background:#fef2f2;border:1px solid #fecaca;color:#991b1b}
 .str-mid{background:#fff7ed;border:1px solid #fed7aa;color:#9a3412}
 .str-strong{background:#f0fdf4;border:1px solid #bbf7d0;color:#166534}
@@ -101,7 +101,7 @@ html,body{height:100%;overflow:hidden;font-family:'Source Sans 3',sans-serif;bac
 .inp:focus{outline:none;border-color:var(--amber)}
 select.inp{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239a7535' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
 
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:none;border-radius:11px;padding:11px 15px;font-family:'Source Sans 3',sans-serif;font-size:14px;font-weight:700;cursor:pointer;min-height:44px;transition:opacity .15s,transform .12s}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:none;border-radius:11px;padding:12px 15px;font-family:'Source Sans 3',sans-serif;font-size:15px;font-weight:700;cursor:pointer;min-height:44px;transition:opacity .15s,transform .12s}
 .btn:active{opacity:.8;transform:scale(.96)}
 .btn-amber{background:linear-gradient(135deg,#d97706,#92400e);color:#fff;box-shadow:0 2px 8px #d9770640}
 .btn-green{background:linear-gradient(135deg,#166534,#14532d);color:#fff}
@@ -115,18 +115,18 @@ select.inp{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
 .fgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
 .fbox{background:var(--bg);border-radius:11px;padding:10px 12px;border:1px solid var(--border)}
 .fbox-full{grid-column:1/-1}
-.fbox-lbl{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.3px;margin-bottom:4px;font-weight:700}
-.fbox-val{color:var(--text);font-weight:700;font-size:13px;line-height:1.4}
-.fbox-sub{color:var(--muted);font-size:11px;margin-top:2px}
-.piti-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;text-align:center}
-.piti-num{font-family:'Playfair Display',serif;font-size:28px;color:var(--honey);font-weight:900}
-.piti-lbl{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.3px;margin-top:1px}
-.piti-div{width:1px;background:var(--border);margin:4px 0}
+.fbox-lbl{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.3px;margin-bottom:4px;font-weight:700}
+.fbox-val{color:var(--text);font-weight:700;font-size:16px;line-height:1.4}
+.fbox-sub{color:var(--muted);font-size:13px;margin-top:2px}
+.piti-grid{display:flex;align-items:center;gap:8px;justify-content:center}
+.piti-num{font-family:'Playfair Display',serif;font-size:22px;color:var(--honey);font-weight:900}
+.piti-lbl{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.3px;margin-top:1px}
+.piti-div{font-size:18px;color:var(--border2);font-weight:300;line-height:1}
 
 /* DIARY IN HIVE */
 .dentry{background:var(--surface);border-radius:10px;border-left:3px solid var(--amber);padding:10px 12px;margin-bottom:7px;animation:su .3s;box-shadow:var(--sh)}
-.dentry-date{color:var(--amber);font-size:11px;font-weight:700;margin-bottom:3px}
-.dentry-txt{font-size:13px;line-height:1.55;color:var(--text)}
+.dentry-date{color:var(--amber);font-size:13px;font-weight:700;margin-bottom:3px}
+.dentry-txt{font-size:15px;line-height:1.6;color:var(--text)}
 .dentry-reset{border-left-color:var(--red)!important}
 .dentry-reset .dentry-txt{color:var(--red);font-weight:700}
 .dentry-actions{display:flex;gap:6px;margin-top:7px}
@@ -546,9 +546,9 @@ function openHive(id){
 
   // Пити display
   const pitiHtml=`<div class="piti-grid">
-    <div><div class="piti-num">${h.piti!==undefined&&h.piti!==null?h.piti:'—'}</div><div class="piti-lbl">В плодника</div></div>
-    <div style="display:flex;align-items:stretch;justify-content:center"><div class="piti-div"></div></div>
-    <div><div class="piti-num">${h.pitiZad!==undefined&&h.pitiZad!==null?h.pitiZad:'—'}</div><div class="piti-lbl">Зад дъска</div></div>
+    <div style="text-align:center"><div class="piti-num">${h.piti!==undefined&&h.piti!==null?h.piti:'—'}</div><div class="piti-lbl">Плодник</div></div>
+    <div class="piti-div">/</div>
+    <div style="text-align:center"><div class="piti-num">${h.pitiZad!==undefined&&h.pitiZad!==null?h.pitiZad:'—'}</div><div class="piti-lbl">Зад дъска</div></div>
   </div>`;
 
   // Notes sorted by date
@@ -594,13 +594,13 @@ function openHive(id){
     <div class="fgrid">
       <div class="fbox">
         <div class="fbox-lbl">Майка от</div>
-        <div class="fbox-val">${h.queenYear||'—'}${h.queenDate?' / '+h.queenDate:''}</div>
+        <div class="fbox-val">${h.queenYear||'—'}</div>
         ${queenMarkHtml}
       </div>
       <div class="fbox">
         <div class="fbox-lbl">Последен преглед</div>
         <div class="fbox-val" style="${h.daysAgo>=21?'color:var(--red)':''}">${h.lastInspection||'—'}</div>
-        <div class="fbox-sub">${h.daysAgo!==null&&h.daysAgo!==undefined?h.daysAgo+' дни назад':'—'}</div>
+        <div class="fbox-sub">${h.daysAgo!==null&&h.daysAgo!==undefined?h.daysAgo+' дни':'—'}</div>
       </div>
       <div class="fbox">
         <div class="fbox-lbl">Мед</div>
@@ -610,12 +610,12 @@ function openHive(id){
         <div class="fbox-lbl">Пило</div>
         <div class="fbox-val">${h.pilo!==undefined&&h.pilo!==null?h.pilo+' пити':'—'}</div>
       </div>
-      <div class="fbox fbox-full">
-        <div class="fbox-lbl">Брой Пити / Зад Дъска</div>
+      <div class="fbox">
+        <div class="fbox-lbl">Пити / Зад Дъска</div>
         ${pitiHtml}
       </div>
-      <div class="fbox fbox-full">
-        <div class="fbox-lbl">Сила на семейството</div>
+      <div class="fbox">
+        <div class="fbox-lbl">Сила</div>
         <span class="str-badge ${sl.cls}">${sl.txt}</span>
       </div>
     </div>
@@ -846,16 +846,62 @@ function textCommand(text){
   return false;
 }
 
+
+// ══════════════════════════════════════════════
+// LOCAL PARSE (without API key)
+// ══════════════════════════════════════════════
+function localParse(text){
+  const t=text.toLowerCase();
+  const entry={hiveNumbers:[],text,type:'note',piti:null,pitiZad:null,pilo:null,honey:null,strength:null,queenYear:null,queenMarked:null,newQueen:false,isCompleted:false,flags:{},tasks:[]};
+  // Piti: "8 пити"
+  const pitiM=t.match(/(\d+)\s*пити/);
+  if(pitiM) entry.piti=parseInt(pitiM[1]);
+  // Zad daska: "2 зад дъска"
+  const zadM=t.match(/(\d+)\s*зад\s*д[ъу]ска/);
+  if(zadM) entry.pitiZad=parseInt(zadM[1]);
+  // Pilo: "3 пило"
+  const piloM=t.match(/(\d+)\s*пило/);
+  if(piloM) entry.pilo=parseInt(piloM[1]);
+  // Honey
+  if(t.includes('много мед')||t.includes('мед много')) entry.honey='много';
+  else if(t.includes('малко мед')||t.includes('мед малко')) entry.honey='малко';
+  else if(t.includes('има мед')||t.includes('мед има')) entry.honey='има';
+  // Strength
+  if(t.includes('силно')||t.includes('силен')) entry.strength='strong';
+  else if(t.includes('слабо')||t.includes('слаб')) entry.strength='weak';
+  else if(t.includes('средн')) entry.strength='mid';
+  // Queen marked
+  if(t.includes('маркиран')) entry.queenMarked=true;
+  if(t.includes('немаркиран')) entry.queenMarked=false;
+  // New queen
+  if(t.includes('нова майка')||t.includes('сменена майка')||t.includes('нова матка')) entry.newQueen=true;
+  // Type
+  if(t.includes('преглед')||t.includes('прегледан')) entry.type='inspection';
+  else if(t.includes('хранен')||t.includes('хранене')) entry.type='feeding';
+  else if(t.includes('лечение')||t.includes('третиран')) entry.type='treatment';
+  // Completed
+  if(t.match(/направих|сложих|прегледах|хранено|готово|свърших|поставих/)) entry.isCompleted=true;
+  return entry;
+}
+
 // ══════════════════════════════════════════════
 // PROCESS TEXT → AI → SAVE
 // ══════════════════════════════════════════════
 async function processText(text, forcedHiveId){
   if(!S.settings.apiKey){
+    // Basic local parsing without API
+    const localEntry=localParse(text);
     if(forcedHiveId){
-      applyParsed({entries:[{hiveNumbers:[],text,type:'note',piti:null,pitiZad:null,pilo:null,honey:null,strength:null,queenYear:null,queenMarked:null,newQueen:false,isCompleted:false,flags:{},tasks:[]}]}, forcedHiveId);
+      applyParsed({entries:[localEntry]}, forcedHiveId);
       return;
     }
-    pendingEntry={text, forcedHiveId:null};
+    // Try to find hive number in text
+    const numMatch=text.match(/(?:кошер|кошера|кошери)\s*(\d+)/i);
+    if(numMatch){
+      const h=S.hives.find(x=>String(x.number)===String(numMatch[1]));
+      if(h){ applyParsed({entries:[{...localEntry,hiveNumbers:[numMatch[1]]}]}, null); return; }
+    }
+    pendingEntry={parsed:{entries:[localEntry]}, text};
     document.getElementById('pick-preview').textContent=text;
     buildPickList();
     document.getElementById('ov-pick').style.display='flex';
@@ -907,10 +953,21 @@ JSON формат (върни ТОЧНО така):
     const res=await callAPI(text,sys);
     hideProc();
     let parsed;
-    try{ parsed=JSON.parse(res); }
-    catch{ parsed={entries:[{hiveNumbers:[],text,type:'note',piti:null,pitiZad:null,pilo:null,honey:null,strength:null,queenYear:null,queenMarked:null,newQueen:false,isCompleted:false,flags:{},tasks:[]}],unknown:true}; }
+    try{
+      // Почисти markdown блокове ако има
+      const clean=res.replace(/```json|```/g,'').trim();
+      parsed=JSON.parse(clean);
+    }
+    catch{
+      parsed={entries:[{hiveNumbers:[],text,type:'note',piti:null,pitiZad:null,pilo:null,honey:null,strength:null,queenYear:null,queenMarked:null,newQueen:false,isCompleted:false,flags:{},tasks:[]}],unknown:true};
+    }
 
     if(!parsed.entries||!parsed.entries.length) parsed.entries=[{hiveNumbers:[],text,type:'note',piti:null,pitiZad:null,pilo:null,honey:null,strength:null,queenYear:null,queenMarked:null,newQueen:false,isCompleted:false,flags:{},tasks:[]}];
+
+    // DEBUG — показва какво е върнал AI (временно)
+    const e0=parsed.entries[0]||{};
+    console.log('AI parsed:', JSON.stringify(parsed));
+    toast('🔍 AI: пити='+e0.piti+' зад='+e0.pitiZad+' мед='+e0.honey+' сила='+e0.strength+' кошери='+JSON.stringify(e0.hiveNumbers), 6000);
 
     const firstEntry=parsed.entries[0];
     if(forcedHiveId){
@@ -976,10 +1033,31 @@ function applyParsed(parsed, forcedHiveId){
     });
   });
   save();
-  toast('✅ Записано в '+saved+(saved===1?' кошер':' кошера'));
-  // Обнови отворения профил ако е отворен
+  const savedNames=[];
+  (parsed.entries||[]).forEach(entry=>{
+    const nums=forcedHiveId ? [] : (entry.hiveNumbers||[]);
+    if(forcedHiveId){ const h=S.hives.find(x=>x.id===forcedHiveId); if(h) savedNames.push('Кошер '+(h.number||h.id)); }
+    else nums.forEach(n=>{ const h=S.hives.find(x=>String(x.number)===String(n)); if(h&&!savedNames.includes('Кошер '+(h.number||h.id))) savedNames.push('Кошер '+(h.number||h.id)); });
+  });
+  toast('✅ Записано — '+(savedNames.length?savedNames.join(', '):''+saved+' кошера'));
+  // Обнови отворения профил ако е отворен (независимо откъде е дошло)
   const ovHive=document.getElementById('ov-hive');
-  if(ovHive.style.display!=='none' && forcedHiveId) openHive(forcedHiveId);
+  if(ovHive.style.display!=='none'){
+    // Намери кой кошер е отворен в момента
+    if(forcedHiveId){
+      openHive(forcedHiveId);
+    } else {
+      // Открий от targets кой е бил отворен
+      let openedId=null;
+      (parsed.entries||[]).forEach(entry=>{
+        (entry.hiveNumbers||[]).forEach(n=>{
+          const h=S.hives.find(x=>String(x.number)===String(n));
+          if(h) openedId=h.id;
+        });
+      });
+      if(openedId) openHive(openedId);
+    }
+  }
   renderDash(); renderBadge();
 }
 
