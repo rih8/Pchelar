@@ -1250,37 +1250,9 @@ async function callAPI(prompt,system){
 // SETTINGS
 // ══════════════════════════════════════════════
 function fixAllStrength(){
-  // Чете badge текста директно от списъка и определя стойността
-  const strMap={
-    'Силно':'strong','силно':'strong','СИЛНО':'strong',
-    'Средна сила':'mid','средна сила':'mid','СРЕДНА СИЛА':'mid','средна':'mid','Средна':'mid',
-    'Слабо':'weak','слабо':'weak','СЛАБО':'weak'
-  };
-  let fixed=0;
-  S.hives.forEach(h=>{
-    // Вземи текстовия label от badge-a
-    const badge=document.querySelector('.hrow .str-badge');
-    // По-надеждно: провери стойността директно
-    const v=h.strength;
-    if(v==='strong'||v==='mid'||v==='weak'||v===null||v===undefined) return;
-    const n=parseInt(String(v));
-    if(!isNaN(n)){
-      const newV=n>=7?'strong':n>=4?'mid':'weak';
-      h.strength=newV; fixed++;
-    } else {
-      // Опитай text match
-      const matched=strMap[String(v)];
-      if(matched){ h.strength=matched; fixed++; }
-      else { h.strength=null; fixed++; }
-    }
-  });
-  save();
-  // Форсирай рефреш на localStorage
-  const backup=JSON.stringify(S);
-  localStorage.removeItem('ppro5');
-  localStorage.setItem('ppro5', backup);
-  renderDash();
-  toast('🔧 Поправени: '+fixed+' кошера. Стойности: '+S.hives.map(h=>'К'+h.number+'→'+h.strength).join(', '), 8000);
+  // Покажи пълна информация в alert
+  const info=S.hives.map(h=>'Кошер '+h.number+': "'+h.strength+'"').join('\n');
+  alert('Стойности за сила:\n\n'+info);
 }
 
 function openSettings(){
