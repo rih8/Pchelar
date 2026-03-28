@@ -1278,7 +1278,19 @@ function importData(e){
 // ══════════════════════════════════════════════
 // INIT
 // ══════════════════════════════════════════════
-load(); S.hives.forEach(h=>{ const n=parseInt(h.strength); if(!isNaN(n)&&h.strength!=='strong'&&h.strength!=='mid'&&h.strength!=='weak'){ if(n>=7)h.strength='strong'; else if(n>=4)h.strength='mid'; else h.strength='weak'; } }); refreshAll(); renderDash(); renderBadge();
+load();
+// Нормализирай и запази всички strength стойности
+let needSave=false;
+S.hives.forEach(h=>{
+  const orig=h.strength;
+  if(h.strength==='strong'||h.strength==='mid'||h.strength==='weak') return;
+  const n=parseInt(h.strength);
+  if(!isNaN(n)){ h.strength=(n>=7?'strong':n>=4?'mid':'weak'); needSave=true; }
+  else if(h.strength===null||h.strength===undefined||h.strength==='null'||h.strength==='') { /* keep null */ }
+  else { h.strength=null; needSave=true; }
+});
+if(needSave) save();
+refreshAll(); renderDash(); renderBadge();
 document.getElementById('hdr-sub').textContent=(S.settings.name||'Пчелар')+' · AI Дневник';
 if(!S.settings.apiKey) setTimeout(()=>toast('👋 Въведи API ключ в ⚙️ за AI функции',5000),1000);
 </script>
