@@ -511,7 +511,21 @@ function renderHiveList(){
   else if(curFilter==='ok') hives=hives.filter(h=>h.status==='ok');
   if(sortMode==='strength'){
     const so={strong:0,mid:1,weak:2};
-    hives.sort((a,b)=>(so[a.strength]??1)-(so[b.strength]??1));
+    function strOrder(h){
+      if(!h.strength) return 1;
+      if(h.strength==='strong') return 0;
+      if(h.strength==='mid') return 1;
+      if(h.strength==='weak') return 2;
+      // legacy numeric
+      const n=parseInt(h.strength);
+      if(n>=7) return 0;
+      if(n>=4) return 1;
+      return 2;
+    }
+    hives.sort((a,b)=>strOrder(a)-strOrder(b));
+  } else if(sortMode==='honey'){
+    const ho={'много':0,'има':1,'малко':2};
+    hives.sort((a,b)=>(ho[a.honey]??1)-(ho[b.honey]??1));
   } else if(sortMode==='number'){
     hives.sort((a,b)=>parseInt(a.number||0)-parseInt(b.number||0));
   } else {
@@ -870,6 +884,12 @@ function textCommand(text){
   if(t.match(/подреди\s*(по\s*)?сила|сортирай\s*(по\s*)?сила/)){
     sortMode='strength'; renderDash();
     toast('✅ Подредено от силни към слаби');
+    return true;
+  }
+  // SORT: по мед
+  if(t.match(/подреди\s*(по\s*)?мед|сортирай\s*(по\s*)?мед/)){
+    sortMode='honey'; renderDash();
+    toast('✅ Подредено по количество мед');
     return true;
   }
   // SORT: по номер
