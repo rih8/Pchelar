@@ -414,7 +414,17 @@ function calcStatus(h){
   }
   h.status=st; h.alerts=al;
 }
-function refreshAll(){ S.hives.forEach(calcStatus); }
+function normalizeStrength(h){
+  // Конвертира стари числови стойности към нов формат
+  if(h.strength==='strong'||h.strength==='mid'||h.strength==='weak'||h.strength===null||h.strength===undefined) return;
+  const n=parseInt(h.strength);
+  if(!isNaN(n)){
+    if(n>=7) h.strength='strong';
+    else if(n>=4) h.strength='mid';
+    else h.strength='weak';
+  }
+}
+function refreshAll(){ S.hives.forEach(h=>{ normalizeStrength(h); calcStatus(h); }); }
 
 // ══════════════════════════════════════════════
 // STRENGTH HELPER
@@ -653,16 +663,16 @@ function openHive(id){
         <div class="fbox-val">${honeyLabel(h.honey)}</div>
       </div>
       <div class="fbox">
-        <div class="fbox-lbl">Пило</div>
-        <div class="fbox-val">${h.pilo!==undefined&&h.pilo!==null?h.pilo+' пити':'—'}</div>
+        <div class="fbox-lbl">Сила</div>
+        <span class="str-badge ${sl.cls}">${sl.txt}</span>
       </div>
       <div class="fbox">
         <div class="fbox-lbl">Пити / Зад Дъска</div>
         ${pitiHtml}
       </div>
       <div class="fbox">
-        <div class="fbox-lbl">Сила</div>
-        <span class="str-badge ${sl.cls}">${sl.txt}</span>
+        <div class="fbox-lbl">Пило</div>
+        <div class="fbox-val">${h.pilo!==undefined&&h.pilo!==null?h.pilo+' пити':'—'}</div>
       </div>
     </div>
 
@@ -1268,7 +1278,7 @@ function importData(e){
 // ══════════════════════════════════════════════
 // INIT
 // ══════════════════════════════════════════════
-load(); refreshAll(); renderDash(); renderBadge();
+load(); S.hives.forEach(h=>{ const n=parseInt(h.strength); if(!isNaN(n)&&h.strength!=='strong'&&h.strength!=='mid'&&h.strength!=='weak'){ if(n>=7)h.strength='strong'; else if(n>=4)h.strength='mid'; else h.strength='weak'; } }); refreshAll(); renderDash(); renderBadge();
 document.getElementById('hdr-sub').textContent=(S.settings.name||'Пчелар')+' · AI Дневник';
 if(!S.settings.apiKey) setTimeout(()=>toast('👋 Въведи API ключ в ⚙️ за AI функции',5000),1000);
 </script>
