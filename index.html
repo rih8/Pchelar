@@ -432,13 +432,17 @@ function refreshAll(){ S.hives.forEach(h=>{ normalizeStrength(h); calcStatus(h);
 // STRENGTH HELPER
 // ══════════════════════════════════════════════
 function strLabel(v){
-  if(!v||v==='weak') return {cls:'str-weak',txt:'🔴 Слабо'};
+  if(!v||v==='null'||v==='undefined') return {cls:'str-mid',txt:'— Не е зададена'};
+  if(v==='weak') return {cls:'str-weak',txt:'🔴 Слабо'};
   if(v==='mid') return {cls:'str-mid',txt:'🟡 Средна сила'};
   if(v==='strong') return {cls:'str-strong',txt:'🟢 Силно'};
-  // legacy numeric
-  if(parseInt(v)<=3) return {cls:'str-weak',txt:'🔴 Слабо'};
-  if(parseInt(v)<=6) return {cls:'str-mid',txt:'🟡 Средна сила'};
-  return {cls:'str-strong',txt:'🟢 Силно'};
+  const n=parseInt(v);
+  if(!isNaN(n)){
+    if(n>=7) return {cls:'str-strong',txt:'🟢 Силно'};
+    if(n>=4) return {cls:'str-mid',txt:'🟡 Средна сила'};
+    return {cls:'str-weak',txt:'🔴 Слабо'};
+  }
+  return {cls:'str-mid',txt:'— Не е зададена'};
 }
 
 function honeyLabel(v){
@@ -1290,11 +1294,12 @@ load();
 // Нормализирай и запази всички strength стойности
 let needSave=false;
 S.hives.forEach(h=>{
-  const orig=h.strength;
   if(h.strength==='strong'||h.strength==='mid'||h.strength==='weak') return;
+  if(h.strength===null||h.strength===undefined||h.strength==='null'||h.strength===''||h.strength==='undefined'){
+    h.strength=null; needSave=true; return;
+  }
   const n=parseInt(h.strength);
   if(!isNaN(n)){ h.strength=(n>=7?'strong':n>=4?'mid':'weak'); needSave=true; }
-  else if(h.strength===null||h.strength===undefined||h.strength==='null'||h.strength==='') { /* keep null */ }
   else { h.strength=null; needSave=true; }
 });
 if(needSave) save();
