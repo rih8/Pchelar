@@ -482,8 +482,12 @@ function show(v){
 // ══════════════════════════════════════════════
 function setF(f){
   curFilter=f;
+  // Update stat buttons
   document.querySelectorAll('.sfbtn').forEach(b=>b.classList.remove('on'));
   document.getElementById('sf-'+f)?.classList.add('on');
+  // Update chip buttons
+  document.querySelectorAll('.fchip').forEach(b=>b.classList.remove('on'));
+  document.getElementById('f-'+f)?.classList.add('on');
   renderHiveList();
 }
 
@@ -523,6 +527,18 @@ function renderHiveList(){
   if(curFilter==='urgent') hives=hives.filter(h=>h.status==='urgent');
   else if(curFilter==='warn') hives=hives.filter(h=>h.status==='warn');
   else if(curFilter==='ok') hives=hives.filter(h=>h.status==='ok');
+  else if(curFilter==='strong') hives=hives.filter(h=>h.strength==='strong');
+  else if(curFilter==='mid') hives=hives.filter(h=>h.strength==='mid');
+  else if(curFilter==='weak') hives=hives.filter(h=>h.strength==='weak');
+  else if(curFilter==='honey-much') hives=hives.filter(h=>h.honey==='много'||h.honey==='much');
+  else if(curFilter==='honey-has') hives=hives.filter(h=>h.honey==='има'||h.honey==='has');
+  else if(curFilter==='honey-little') hives=hives.filter(h=>h.honey==='малко'||h.honey==='little');
+  else if(curFilter==='honey-little') hives=hives.filter(h=>h.honey==='малко'||h.honey==='little');
+  else if(curFilter==='honey-has') hives=hives.filter(h=>h.honey==='има'||h.honey==='has');
+  else if(curFilter==='honey-much') hives=hives.filter(h=>h.honey==='много'||h.honey==='much');
+  else if(curFilter==='str-strong') hives=hives.filter(h=>h.strength==='strong');
+  else if(curFilter==='str-mid') hives=hives.filter(h=>h.strength==='mid');
+  else if(curFilter==='str-weak') hives=hives.filter(h=>h.strength==='weak'||h.strength===null||h.strength==='null');
   if(sortMode==='strength'){
     const so={strong:0,mid:1,weak:2};
     function strOrder(h){
@@ -894,6 +910,30 @@ function sendInput(){
 function textCommand(text){
   const t=text.toLowerCase().trim();
 
+  // FILTER: по мед
+  if(t.match(/покажи\s*(само\s*)?.*малко\s*мед|само.*малко\s*мед/)){
+    curFilter='honey-little'; renderDash(); toast('🔴 Само с малко мед'); return true;
+  }
+  if(t.match(/покажи\s*(само\s*)?.*има\s*мед|само.*има\s*мед/)){
+    curFilter='honey-has'; renderDash(); toast('🟡 Само с "Има мед"'); return true;
+  }
+  if(t.match(/покажи\s*(само\s*)?.*много\s*мед|само.*много\s*мед/)){
+    curFilter='honey-much'; renderDash(); toast('🟢 Само с много мед'); return true;
+  }
+  // FILTER: по сила
+  if(t.match(/покажи\s*(само\s*)?.*силни|само.*силни/)){
+    curFilter='str-strong'; renderDash(); toast('🟢 Само силни'); return true;
+  }
+  if(t.match(/покажи\s*(само\s*)?.*средна\s*сила|само.*средна/)){
+    curFilter='str-mid'; renderDash(); toast('🟡 Само средна сила'); return true;
+  }
+  if(t.match(/покажи\s*(само\s*)?.*слаби|само.*слаби/)){
+    curFilter='str-weak'; renderDash(); toast('🔴 Само слаби'); return true;
+  }
+  // SHOW ALL
+  if(t.match(/покажи\s*всички|всички\s*кошери/)){
+    curFilter='all'; renderDash(); toast('🏠 Всички кошери'); return true;
+  }
   // SORT: по сила
   if(t.match(/подреди\s*(по\s*)?сила|сортирай\s*(по\s*)?сила/)){
     sortMode='strength'; renderDash();
